@@ -1,0 +1,6 @@
+{
+  "name": "Ced Cantong | Video Editor",
+  "description": "High-Retention Editing for Multi-Format Video Pipelines",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
