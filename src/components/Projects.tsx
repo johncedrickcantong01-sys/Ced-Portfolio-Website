@@ -218,7 +218,8 @@ export default function Projects() {
                   <video 
                     src={`${project.videoUrl}#t=0.001`} 
                     className="w-full h-full object-cover transform scale-100 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out"
-                    preload="auto"
+                    preload="metadata"
+                    autoPlay
                     muted
                     playsInline
                     loop
@@ -305,6 +306,7 @@ export default function Projects() {
                 autoPlay
                 controls
                 playsInline
+                preload="metadata"
                 className="w-full h-full object-contain"
               />
             ) : (
