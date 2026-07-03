@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Template data for projects with interactive video URLs
 const PROJECTS = [
@@ -265,6 +266,18 @@ export default function Projects() {
             </article>
           );
         })}
+      </div>
+
+      <div className="mt-20 flex flex-col items-center justify-center text-center">
+        <p className="text-text-muted text-sm mb-4 max-w-md mx-auto">
+          Videos not playing on your mobile device? 
+        </p>
+        <Link 
+          to="/fallback" 
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest rounded-full transition-all border border-white/10 hover:border-white/20"
+        >
+          View YouTube Version
+        </Link>
       </div>
 
       {/* Video Player Modal */}
