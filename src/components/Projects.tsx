@@ -11,7 +11,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Podcast Editing', 'Multi-Cam'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20C4C%20Podcast%20S3E1%200001-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20C4C%20Podcast%20S3E1%200001-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: true,
   },
@@ -22,7 +22,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Trailer', 'Sound Design'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: false,
   },
@@ -35,7 +35,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['3D Graphics', 'Animation'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Sample%20Edit%20%231-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Sample%20Edit%20%231-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -46,7 +46,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI Gen', 'Talking Head'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -57,7 +57,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Action', 'B-Rolls'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/MMA-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/MMA-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: false,
   },
@@ -70,7 +70,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Commercial', 'Corporate'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: true,
   },
@@ -81,7 +81,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Storytelling', 'Sales'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Shane%20Ads%20(TEST%20AD%201_Video%232)-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Shane%20Ads%20(TEST%20AD%201_Video%232)-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: false,
   },
@@ -94,7 +94,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI', 'Talking Head'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -105,7 +105,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Speedramp', 'VFX'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/C2%20Speedramp-HD%201080p.mov',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/C2%20Speedramp-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: false,
   }
@@ -118,7 +118,7 @@ const isDirectVideo = (url: string | null): boolean => {
   return (
     lowercase.endsWith('.mp4') || 
     lowercase.endsWith('.webm') || 
-    lowercase.endsWith('.mov') || 
+    lowercase.endsWith('.mp4') || 
     lowercase.endsWith('.m4v') ||
     lowercase.includes('backblazeb2.com') ||
     (!lowercase.includes('youtube.com') && !lowercase.includes('youtu.be') && !lowercase.includes('embed'))
