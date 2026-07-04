@@ -253,9 +253,9 @@ export default function About() {
                   <Music className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <h4 className="text-white font-medium tracking-wide mb-3">Local voice & audio</h4>
+                  <h4 className="text-white font-medium tracking-wide mb-3">Local Voice And Audio Generation</h4>
                   <p className="text-sm text-text-muted leading-relaxed">
-                    Text-to-speech and custom music. All rendered on-device. No waiting on cloud renders. No generic stock.
+                    Text-to-speech, voice cloning, and custom music. All rendered on-device. No waiting on cloud renders. No generic stock.
                   </p>
                 </div>
               </div>
