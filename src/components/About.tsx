@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes } from 'lucide-react';
+import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes, Bot, Lock } from 'lucide-react';
 // @ts-ignore
 import myPhoto from '../../1760680944153.jpeg_2K_202607030135.jpeg';
 
@@ -203,35 +203,98 @@ export default function About() {
         ))}
       </div>
 
-      {/* Process Section */}
-      <div>
-        <h2 className="heading-md mb-16 pb-6 border-b border-border uppercase tracking-wide">The Process</h2>
+      {/* AI Production Pipeline Process */}
+      <div className="relative bg-background border border-border p-8 md:p-12 lg:p-16 rounded-sm overflow-hidden flex flex-col items-center">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Step 1 */}
-          <div className="relative">
-            <span className="text-primary text-label mb-6 block">01 | ASSET INGESTION</span>
-            <h3 className="heading-md mb-4">Smart & Fast Prep.</h3>
-            <p className="text-body-lg text-text-muted !opacity-80">
-              I use AI tools to instantly transcribe and organize your footage the second it lands. Skipping the boring manual sorting means we get straight to the actual strategy without wasting a single day.
+        <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center">
+          <div className="flex flex-col items-center gap-3 mb-10 text-center">
+            <Atom className="text-primary w-8 h-8" />
+            <h2 className="heading-md uppercase tracking-widest text-white">Private AI Production Pipeline</h2>
+          </div>
+
+          <div className="mb-16 max-w-3xl text-center">
+            <p className="text-xl md:text-2xl font-sans font-medium text-white leading-relaxed mb-4">
+              You've got a great story. Your footage should stay yours.
+            </p>
+            <p className="text-body-lg text-white leading-relaxed">
+              I run a private AI production pipeline on my own machine. No cloud, no data leaving my desk. Just faster turnaround and more time on the actual edit.
             </p>
           </div>
-          
-          {/* Step 2 */}
-          <div className="relative">
-            <span className="text-primary text-label mb-6 block">02 | PIPELINE EXECUTION</span>
-            <h3 className="heading-md mb-4">Editing with Focus.</h3>
-            <p className="text-body-lg text-text-muted !opacity-80">
-              I let AI tackle the tedious grunt work—like rough assembly cuts and tracking. Offloading those repetitive steps completely frees up my brain, giving me way more time to perfect the pacing, storytelling, and scroll-stopping hooks.
-            </p>
+
+          <div className="w-full text-center mb-12">
+            <h3 className="text-xs font-bold text-primary uppercase tracking-[0.2em] inline-block border-b border-white/5 pb-4">
+              What that means for you
+            </h3>
           </div>
-          
-          {/* Step 3 */}
-          <div className="relative">
-            <span className="text-primary text-label mb-6 block">03 | FINAL QA & DELIVERY</span>
-            <h3 className="heading-md mb-4">Polished & Out the Door.</h3>
-            <p className="text-body-lg text-text-muted !opacity-80">
-              Every video gets a strict final check for flawless audio, clean color, and exact platform specs. You get premium, ready-to-post content delivered directly to your team right on schedule.
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 mb-16 w-full">
+            {/* Feature 1 */}
+            <div className="group text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
+                  <Bot className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium tracking-wide mb-3">Hermes Agent</h4>
+                  <p className="text-sm text-text-muted leading-relaxed">
+                    My autonomous assistant. Handles the repetitive stuff in the background so I'm never buried in file management when I should be cutting your footage.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="group text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
+                  <Shapes className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium tracking-wide mb-3">Local voice, audio & 3D</h4>
+                  <p className="text-sm text-text-muted leading-relaxed">
+                    Text-to-speech, custom music, 3D assets. All rendered on-device. No waiting on cloud renders. No generic stock.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="group text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
+                  <Sparkles className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium tracking-wide mb-3">Private LLMs</h4>
+                  <p className="text-sm text-text-muted leading-relaxed">
+                    Ollama and Odysseus AI running locally. Drafting scripts, generating captions, analyzing pacing — all on my hardware. Your project data never touches a third-party server.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="group text-center">
+              <div className="flex flex-col items-center gap-4">
+                <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
+                  <Lock className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium tracking-wide mb-3">100% Private</h4>
+                  <p className="text-sm text-text-muted leading-relaxed">
+                    Your raw footage, brand assets, unreleased content. Never uploaded. Never shared. Zero data leakage risk.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-primary/10 border border-primary/20 p-6 md:p-8 rounded-sm text-center w-full max-w-4xl mx-auto">
+            <p className="text-white font-medium tracking-wide italic">
+              "AI doesn't replace the creative work. It clears the clutter so I can focus on the storytelling."
             </p>
           </div>
         </div>
