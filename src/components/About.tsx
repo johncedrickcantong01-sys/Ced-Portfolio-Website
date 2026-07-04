@@ -230,9 +230,9 @@ export default function About() {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16 mb-16 w-full">
+          <div className="flex flex-wrap justify-center gap-10 lg:gap-16 mb-16 w-full">
             {/* Feature 1 */}
-            <div className="group text-center">
+            <div className="group text-center w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.67rem)] max-w-xs">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
                   <Bot className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
@@ -247,7 +247,7 @@ export default function About() {
             </div>
 
             {/* Feature 2 */}
-            <div className="group text-center">
+            <div className="group text-center w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.67rem)] max-w-xs">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
                   <Music className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
@@ -262,7 +262,7 @@ export default function About() {
             </div>
 
             {/* Feature 3 */}
-            <div className="group text-center">
+            <div className="group text-center w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.67rem)] max-w-xs">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
                   <Sparkles className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
@@ -277,7 +277,7 @@ export default function About() {
             </div>
 
             {/* Feature 5 */}
-            <div className="group text-center">
+            <div className="group text-center w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.67rem)] max-w-xs">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
                   <AudioLines className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
@@ -292,7 +292,7 @@ export default function About() {
             </div>
 
             {/* Feature 6 */}
-            <div className="group text-center">
+            <div className="group text-center w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.67rem)] max-w-xs">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
                   <Lock className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
