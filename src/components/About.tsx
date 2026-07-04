@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes, Bot, Lock, Image, AudioLines, Music } from 'lucide-react';
+import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes, Bot, Lock, AudioLines, Music } from 'lucide-react';
 // @ts-ignore
 import myPhoto from '../../1760680944153.jpeg_2K_202607030135.jpeg';
 
@@ -271,21 +271,6 @@ export default function About() {
                   <h4 className="text-white font-medium tracking-wide mb-3">Private LLMs</h4>
                   <p className="text-sm text-text-muted leading-relaxed">
                     Ollama and Odysseus AI running locally. Drafting scripts, generating captions, analyzing pacing — all on my hardware. Your project data never touches a third-party server.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="group text-center">
-              <div className="flex flex-col items-center gap-4">
-                <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
-                  <Image className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
-                </div>
-                <div>
-                  <h4 className="text-white font-medium tracking-wide mb-3">Local Image Generation</h4>
-                  <p className="text-sm text-text-muted leading-relaxed">
-                    Instantly generate high-fidelity storyboards, placeholder artwork, and custom brand graphics locally directly from my creative process.
                   </p>
                 </div>
               </div>
