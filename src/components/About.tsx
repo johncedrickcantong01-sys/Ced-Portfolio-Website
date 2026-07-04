@@ -169,7 +169,7 @@ export default function About() {
       {/* Stats Brutalist Blocks */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
         {[
-          { icon: <Film size={32} />, number: '700+', label: 'Videos Delivered', subtext: null },
+          { icon: <Film size={32} />, number: '500+', label: 'Videos Delivered', subtext: null },
           { icon: <Clock size={32} />, number: '24h', label: 'Standard Turnaround', subtext: null },
           { 
             icon: <Award size={32} />, 
