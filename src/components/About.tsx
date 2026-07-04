@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes, Bot, Lock, Image, AudioLines } from 'lucide-react';
+import { Film, Clock, Award, Clapperboard, Layers, Scissors, PenTool, Sparkles, Zap, Atom, Shapes, Bot, Lock, Image, AudioLines, Music } from 'lucide-react';
 // @ts-ignore
 import myPhoto from '../../1760680944153.jpeg_2K_202607030135.jpeg';
 
@@ -220,7 +220,7 @@ export default function About() {
               You've got a great story. Your footage should stay yours.
             </p>
             <p className="text-body-lg text-white leading-relaxed">
-              I run a private AI production pipeline on my own machine. No cloud, no data leaving my desk. Just faster turnaround and more time on the actual edit.
+              I run a private AI production pipeline. No cloud, no data leaving my desk. Just faster turnaround and more time on the actual edit.
             </p>
           </div>
 
@@ -250,12 +250,12 @@ export default function About() {
             <div className="group text-center">
               <div className="flex flex-col items-center gap-4">
                 <div className="p-4 bg-white/5 border border-white/10 rounded-full group-hover:border-primary/50 transition-colors">
-                  <Shapes className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
+                  <Music className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <h4 className="text-white font-medium tracking-wide mb-3">Local voice, audio & 3D</h4>
+                  <h4 className="text-white font-medium tracking-wide mb-3">Local voice & audio</h4>
                   <p className="text-sm text-text-muted leading-relaxed">
-                    Text-to-speech, custom music, 3D assets. All rendered on-device. No waiting on cloud renders. No generic stock.
+                    Text-to-speech and custom music. All rendered on-device. No waiting on cloud renders. No generic stock.
                   </p>
                 </div>
               </div>
