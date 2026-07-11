@@ -30,6 +30,17 @@ const PROJECTS = [
   
   // Shorts/Reels
   {
+    id: 11,
+    title: 'Cases 4 Causes Podcast Clip',
+    category: 'Shorts/Reels',
+    image: '',
+    youtubeId: '',
+    tags: ['Podcast Clip', 'Talking Head'],
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/9x16%20C4C%20Podcast%20S3E1%200001-HD%201080p.mov',
+    aspect: 'vertical',
+    highlight: false,
+  },
+  {
     id: 10,
     title: 'Talking Head Clean Edit',
     category: 'Shorts/Reels',
@@ -102,7 +113,7 @@ const PROJECTS = [
   {
     id: 8,
     title: 'AI Talking Head Demo',
-    category: 'AI Contents',
+    category: 'AI Content',
     image: '',
     youtubeId: '',
     tags: ['AI', 'Talking Head'],
@@ -113,7 +124,7 @@ const PROJECTS = [
   {
     id: 9,
     title: 'Speedramp C2',
-    category: 'AI Contents',
+    category: 'AI Content',
     image: '',
     youtubeId: '',
     tags: ['Speedramp', 'VFX'],
@@ -137,7 +148,7 @@ const isDirectVideo = (url: string | null): boolean => {
   );
 };
 
-const FILTERS = ['Featured', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Contents'];
+const FILTERS = ['Featured', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('Featured');
@@ -155,8 +166,8 @@ export default function Projects() {
   return (
     <section id="projects" className="section-padding container-max">
       
-      {/* Header & Filters */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+      {/* Header & Filters in Stacked Layout */}
+      <div className="flex flex-col items-start gap-8 mb-16">
         <div>
           <span className="text-[10px] tracking-[0.3em] uppercase opacity-40 font-semibold mb-2 block">Portfolio Index</span>
           <h2 className="heading-lg mb-4 italic">
@@ -167,14 +178,14 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex gap-8 text-[11px] tracking-widest uppercase font-semibold opacity-60">
+        {/* Filter Buttons - Stacked & Left Aligned with Flex Wrap for mobile safety */}
+        <div className="flex flex-wrap gap-x-8 gap-y-4 text-[11px] tracking-widest uppercase font-semibold opacity-70">
           {FILTERS.map(filter => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`hover:opacity-100 transition-opacity ${
-                activeFilter === filter ? 'border-b border-primary pb-1 text-primary opacity-100' : 'pb-1 text-text-main'
+              className={`hover:opacity-100 transition-opacity whitespace-nowrap ${
+                activeFilter === filter ? 'border-b border-primary pb-1 text-primary opacity-100' : 'pb-1 text-text-main hover:text-white'
               }`}
             >
               {filter}
@@ -302,7 +313,7 @@ export default function Projects() {
             }} 
           />
           <div className={`relative w-full flex items-center justify-center bg-black shadow-2xl transition-all duration-300 mx-auto ${
-            activeVideoCategory === 'Shorts/Reels' || activeVideoCategory === 'AI Contents'
+            activeVideoCategory === 'Shorts/Reels' || activeVideoCategory === 'AI Content'
               ? 'max-w-[400px] max-h-[85vh] aspect-[9/16]' 
               : 'max-w-5xl max-h-[85vh] aspect-video'
           }`}>

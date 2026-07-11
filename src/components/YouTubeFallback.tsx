@@ -62,7 +62,7 @@ const YOUTUBE_PROJECTS = [
   {
     id: 8,
     title: 'AI Content 1',
-    category: 'AI Contents',
+    category: 'AI Content',
     youtubeId: '7wGegxBwwSE',
     tags: ['AI Generation', 'Digital Art'],
     aspect: 'vertical',
@@ -70,7 +70,7 @@ const YOUTUBE_PROJECTS = [
   {
     id: 9,
     title: 'AI Content 2',
-    category: 'AI Contents',
+    category: 'AI Content',
     youtubeId: '5TCuzOWfAh8',
     tags: ['Transitions', 'AI Editing'],
     aspect: 'vertical',
@@ -85,7 +85,7 @@ const YOUTUBE_PROJECTS = [
   },
 ];
 
-const FILTERS = ['All', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Contents'];
+const FILTERS = ['All', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
 export default function YouTubeFallback() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -199,7 +199,7 @@ export default function YouTubeFallback() {
             }} 
           />
           <div className={`relative w-full flex items-center justify-center bg-black shadow-2xl transition-all duration-300 mx-auto ${
-            activeVideoCategory === 'Shorts/Reels' || activeVideoCategory === 'AI Contents'
+            activeVideoCategory === 'Shorts/Reels' || activeVideoCategory === 'AI Content'
               ? 'max-w-[400px] max-h-[85vh] aspect-[9/16]' 
               : 'max-w-5xl max-h-[85vh] aspect-video'
           }`}>
