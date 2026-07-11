@@ -30,6 +30,17 @@ const PROJECTS = [
   
   // Shorts/Reels
   {
+    id: 10,
+    title: 'Talking Head Clean Edit',
+    category: 'Shorts/Reels',
+    image: '',
+    youtubeId: '',
+    tags: ['Talking Head', 'Clean Edit'],
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/TT%20sample%20edit%204(1).mp4',
+    aspect: 'vertical',
+    highlight: false,
+  },
+  {
     id: 3,
     title: 'Ced Showcase Reel',
     category: 'Shorts/Reels',
