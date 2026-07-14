@@ -68,6 +68,15 @@ const YOUTUBE_PROJECTS = [
     aspect: 'vertical',
   },
   {
+    id: 11,
+    title: 'VEO3 Podcast Edit',
+    category: 'AI Content',
+    youtubeId: '',
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
+    tags: ['AI Content', 'Podcast Format'],
+    aspect: 'vertical',
+  },
+  {
     id: 9,
     title: 'AI Content 2',
     category: 'AI Content',
@@ -90,6 +99,7 @@ const FILTERS = ['All', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Conte
 export default function YouTubeFallback() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [activeYoutubeId, setActiveYoutubeId] = useState<string | null>(null);
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [activeVideoCategory, setActiveVideoCategory] = useState<string | null>(null);
 
   const filteredProjects = activeFilter === 'All' 
@@ -139,7 +149,13 @@ export default function YouTubeFallback() {
             <article 
               key={project.id} 
               onClick={() => {
-                setActiveYoutubeId(project.youtubeId);
+                if (project.videoUrl) {
+                  setActiveVideoUrl(project.videoUrl);
+                  setActiveYoutubeId(null);
+                } else {
+                  setActiveYoutubeId(project.youtubeId);
+                  setActiveVideoUrl(null);
+                }
                 setActiveVideoCategory(project.category);
               }}
               className={`group cursor-pointer flex flex-col gap-4 ${
@@ -149,20 +165,37 @@ export default function YouTubeFallback() {
               <div className={`relative w-full overflow-hidden bg-neutral-900 transition-transform duration-500 ease-out ${
                 project.aspect === 'vertical' ? 'aspect-square md:aspect-[4/5]' : 'aspect-[16/9]'
               }`}>
-                <img 
-                  src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
-                  alt={project.title} 
-                  className="w-full h-full object-cover transform scale-100 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out"
-                  loading="lazy"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (target.src.includes('maxresdefault.jpg')) {
-                      target.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
-                    } else if (target.src.includes('hqdefault.jpg')) {
-                      target.src = `https://img.youtube.com/vi/${project.youtubeId}/0.jpg`;
-                    }
-                  }}
-                />
+                {project.videoUrl ? (
+                  <video 
+                    src={`${project.videoUrl}#t=0.001`} 
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out"
+                    preload="metadata"
+                    muted
+                    playsInline
+                    loop
+                    onMouseEnter={(e) => {
+                      e.currentTarget.play().catch(() => {});
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                    }}
+                  />
+                ) : (
+                  <img 
+                    src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                    alt={project.title} 
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 ease-out"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.includes('maxresdefault.jpg')) {
+                        target.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                      } else if (target.src.includes('hqdefault.jpg')) {
+                        target.src = `https://img.youtube.com/vi/${project.youtubeId}/0.jpg`;
+                      }
+                    }}
+                  />
+                )}
                 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                   <div className="w-12 h-12 flex items-center justify-center text-white bg-black/40 backdrop-blur-sm rounded-full">
@@ -189,12 +222,13 @@ export default function YouTubeFallback() {
       </main>
 
       {/* Video Player Modal */}
-      {activeYoutubeId && (
+      {(activeYoutubeId || activeVideoUrl) && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-background/95 backdrop-blur-sm transition-opacity duration-300">
           <div 
             className="absolute inset-0 cursor-pointer" 
             onClick={() => {
               setActiveYoutubeId(null);
+              setActiveVideoUrl(null);
               setActiveVideoCategory(null);
             }} 
           />
@@ -207,19 +241,39 @@ export default function YouTubeFallback() {
               className="absolute -top-10 right-0 md:-right-10 md:top-0 z-10 p-2 text-text-muted hover:text-white transition-colors"
               onClick={() => {
                 setActiveYoutubeId(null);
+                setActiveVideoUrl(null);
                 setActiveVideoCategory(null);
               }}
             >
               <X size={28} />
             </button>
-            <iframe
-              src={`https://www.youtube.com/embed/${activeYoutubeId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&showinfo=0&cc_load_policy=0`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full"
-            />
+            {activeVideoUrl ? (
+              <video
+                ref={(el) => {
+                  if (el && el.paused) {
+                    const p = el.play();
+                    if (p !== undefined) {
+                      p.catch(() => {});
+                    }
+                  }
+                }}
+                src={activeVideoUrl}
+                autoPlay
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <iframe
+                src={`https://www.youtube.com/embed/${activeYoutubeId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&showinfo=0&cc_load_policy=0`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            )}
           </div>
         </div>
       )}
