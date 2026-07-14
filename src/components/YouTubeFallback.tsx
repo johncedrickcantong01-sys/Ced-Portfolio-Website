@@ -94,17 +94,15 @@ const YOUTUBE_PROJECTS = [
   },
 ];
 
-const FILTERS = ['All', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
+const FILTERS = ['Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
 export default function YouTubeFallback() {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeFilter, setActiveFilter] = useState('Shorts/Reels');
   const [activeYoutubeId, setActiveYoutubeId] = useState<string | null>(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [activeVideoCategory, setActiveVideoCategory] = useState<string | null>(null);
 
-  const filteredProjects = activeFilter === 'All' 
-    ? YOUTUBE_PROJECTS 
-    : YOUTUBE_PROJECTS.filter(p => p.category === activeFilter);
+  const filteredProjects = YOUTUBE_PROJECTS.filter(p => p.category === activeFilter);
 
   return (
     <div className="min-h-screen bg-background text-text-main flex flex-col">
