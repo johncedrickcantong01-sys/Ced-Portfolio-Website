@@ -111,6 +111,17 @@ const PROJECTS = [
 
   // AI Contents
   {
+    id: 12,
+    title: 'VEO3 Podcast Edit',
+    category: 'AI Content',
+    image: '',
+    youtubeId: '',
+    tags: ['AI Content', 'Podcast Format'],
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
+    aspect: 'vertical',
+    highlight: true,
+  },
+  {
     id: 8,
     title: 'AI Talking Head Demo',
     category: 'AI Content',
@@ -157,7 +168,7 @@ export default function Projects() {
 
   let filteredProjects = PROJECTS;
   if (activeFilter === 'Featured') {
-    const featuredOrder = [4, 3, 5, 2, 6];
+    const featuredOrder = [4, 3, 12, 2, 6];
     filteredProjects = featuredOrder.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean) as typeof PROJECTS;
   } else {
     filteredProjects = PROJECTS.filter(p => p.category === activeFilter);
