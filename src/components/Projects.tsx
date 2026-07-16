@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Play, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Play, X, Link2, Check } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // Template data for projects with interactive video URLs
 const PROJECTS = [
@@ -114,6 +114,7 @@ const PROJECTS = [
     id: 12,
     title: 'VEO3 Podcast Edit',
     category: 'AI Content',
+    subCategory: 'UGC',
     image: '',
     youtubeId: '',
     tags: ['AI Content', 'Podcast Format'],
@@ -125,6 +126,7 @@ const PROJECTS = [
     id: 8,
     title: 'AI Talking Head Demo',
     category: 'AI Content',
+    subCategory: 'Talking Head',
     image: '',
     youtubeId: '',
     tags: ['AI', 'Talking Head'],
@@ -136,6 +138,7 @@ const PROJECTS = [
     id: 9,
     title: 'Speedramp C2',
     category: 'AI Content',
+    subCategory: 'VFX & Motion',
     image: '',
     youtubeId: '',
     tags: ['Speedramp', 'VFX'],
@@ -161,15 +164,94 @@ const isDirectVideo = (url: string | null): boolean => {
 
 const FILTERS = ['Featured', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
+const AI_SUBCATEGORIES = ['All AI', 'UGC', 'Talking Head', 'VFX & Motion'] as const;
+type AISubCategory = typeof AI_SUBCATEGORIES[number];
+
+const filterToSlug = (filter: string): string => {
+  return filter.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+};
+
+const slugToFilter = (slug: string | null): string => {
+  if (!slug) return 'Featured';
+  const found = FILTERS.find(f => filterToSlug(f) === slug.toLowerCase());
+  return found || 'Featured';
+};
+
+const subToSlug = (sub: AISubCategory): string => {
+  return sub.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+};
+
+const slugToSub = (slug: string | null): AISubCategory => {
+  if (!slug) return 'All AI';
+  const found = AI_SUBCATEGORIES.find(s => subToSlug(s) === slug.toLowerCase());
+  return found || 'All AI';
+};
+
 export default function Projects() {
-  const [activeFilter, setActiveFilter] = useState('Featured');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [copiedTab, setCopiedTab] = useState<string | null>(null);
+  
+  const activeFilterSlug = searchParams.get('tab') || 'featured';
+  const activeFilter = slugToFilter(activeFilterSlug);
+
+  const activeSubSlug = searchParams.get('sub') || 'all-ai';
+  const activeSubCategory = slugToSub(activeSubSlug);
+  
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [activeVideoCategory, setActiveVideoCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('projects');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
+  const handleFilterChange = (filter: string) => {
+    const slug = filterToSlug(filter);
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('tab', slug);
+      if (filter !== 'AI Content') {
+        newParams.delete('sub');
+      } else {
+        newParams.set('sub', 'all-ai');
+      }
+      return newParams;
+    }, { replace: true });
+    
+    const element = document.getElementById('projects');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSubFilterChange = (sub: AISubCategory) => {
+    const slug = subToSlug(sub);
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('sub', slug);
+      return newParams;
+    }, { replace: true });
+  };
 
   let filteredProjects = PROJECTS;
   if (activeFilter === 'Featured') {
     const featuredOrder = [4, 3, 12, 2, 6];
     filteredProjects = featuredOrder.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean) as typeof PROJECTS;
+  } else if (activeFilter === 'AI Content') {
+    const aiProjects = PROJECTS.filter(p => p.category === 'AI Content');
+    if (activeSubCategory === 'All AI') {
+      filteredProjects = aiProjects;
+    } else {
+      filteredProjects = aiProjects.filter(p => p.subCategory === activeSubCategory);
+    }
   } else {
     filteredProjects = PROJECTS.filter(p => p.category === activeFilter);
   }
@@ -189,19 +271,111 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Filter Buttons - Stacked & Left Aligned with Flex Wrap for mobile safety */}
-        <div className="flex flex-wrap gap-x-8 gap-y-4 text-[11px] tracking-widest uppercase font-semibold opacity-70">
-          {FILTERS.map(filter => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`hover:opacity-100 transition-opacity whitespace-nowrap ${
-                activeFilter === filter ? 'border-b border-primary pb-1 text-primary opacity-100' : 'pb-1 text-text-main hover:text-white'
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
+        {/* Filter Buttons & Sub-filters - Stacked & Left Aligned with Flex Wrap for mobile safety */}
+        <div className="flex flex-col gap-6 w-full">
+          <div className="flex flex-wrap gap-x-6 gap-y-4 text-[11px] tracking-widest uppercase font-semibold">
+            {FILTERS.map(filter => {
+              const isActive = activeFilter === filter;
+              const slug = filterToSlug(filter);
+              return (
+                <div key={filter} className="group relative flex items-center gap-1.5 whitespace-nowrap">
+                  <button
+                    onClick={() => handleFilterChange(filter)}
+                    className={`hover:opacity-100 transition-opacity pb-1 ${
+                      isActive ? 'border-b border-primary text-primary opacity-100' : 'text-text-main opacity-70 hover:opacity-100 hover:text-white'
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                  
+                  {/* Copy Direct Link Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const url = new URL(window.location.href);
+                      url.searchParams.set('tab', slug);
+                      url.searchParams.delete('sub');
+                      navigator.clipboard.writeText(url.toString());
+                      setCopiedTab(filter);
+                      setTimeout(() => setCopiedTab(null), 2000);
+                    }}
+                    className={`p-1 rounded-md hover:bg-neutral-800 hover:text-primary transition-all ${
+                      isActive ? 'opacity-100 text-text-muted' : 'opacity-0 group-hover:opacity-60 hover:opacity-100 text-text-muted'
+                    }`}
+                    title={`Copy direct link for ${filter}`}
+                  >
+                    {copiedTab === filter ? (
+                      <Check className="w-3 h-3 text-green-500 animate-pulse" />
+                    ) : (
+                      <Link2 className="w-3 h-3" />
+                    )}
+                  </button>
+                  
+                  {/* Copied Tooltip */}
+                  {copiedTab === filter && (
+                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-neutral-900 text-white text-[9px] px-2 py-1 rounded shadow-md border border-neutral-800 transition-all duration-200 z-10">
+                      Copied!
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Secondary Tabs for AI Content */}
+          {activeFilter === 'AI Content' && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] tracking-widest uppercase font-semibold text-text-muted border-t border-white/5 pt-4 w-full max-w-2xl">
+              <span className="text-[9px] text-text-muted select-none tracking-normal font-normal mr-2">SUB-GENRES:</span>
+              {AI_SUBCATEGORIES.map(sub => {
+                const isSubActive = activeSubCategory === sub;
+                const slug = subToSlug(sub);
+                return (
+                  <div key={sub} className="group relative flex items-center gap-1">
+                    <button
+                      onClick={() => handleSubFilterChange(sub)}
+                      className={`px-3 py-1.5 rounded-full border transition-all duration-200 ${
+                        isSubActive 
+                          ? 'bg-primary text-background border-primary font-bold' 
+                          : 'border-white/5 bg-neutral-900/40 text-text-muted hover:text-white hover:border-white/10 hover:bg-neutral-900/80'
+                      }`}
+                    >
+                      {sub}
+                    </button>
+
+                    {/* Copy Direct Link for Sub-Genre */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('tab', 'ai-content');
+                        url.searchParams.set('sub', slug);
+                        navigator.clipboard.writeText(url.toString());
+                        setCopiedTab(`sub-${sub}`);
+                        setTimeout(() => setCopiedTab(null), 2000);
+                      }}
+                      className={`p-1 rounded-md hover:bg-neutral-800 hover:text-primary transition-all ${
+                        isSubActive ? 'opacity-100 text-text-muted' : 'opacity-0 group-hover:opacity-60 hover:opacity-100 text-text-muted'
+                      }`}
+                      title={`Copy direct link for ${sub}`}
+                    >
+                      {copiedTab === `sub-${sub}` ? (
+                        <Check className="w-3 h-3 text-green-500 animate-pulse" />
+                      ) : (
+                        <Link2 className="w-3 h-3" />
+                      )}
+                    </button>
+
+                    {/* Copied Tooltip for Sub-Genre */}
+                    {copiedTab === `sub-${sub}` && (
+                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-neutral-900 text-white text-[9px] px-2 py-1 rounded shadow-md border border-neutral-800 transition-all duration-200 z-10">
+                        Copied!
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
