@@ -111,6 +111,30 @@ const PROJECTS = [
 
   // AI Contents
   {
+    id: 13,
+    title: 'Volufine 142 TOF Ad',
+    category: 'AI Content',
+    subCategory: 'DTC Ads',
+    image: '',
+    youtubeId: '',
+    tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/VOLUFINE-142-TOF-VIDEOAD-HD%201080p.mov',
+    aspect: 'vertical',
+    highlight: true,
+  },
+  {
+    id: 14,
+    title: 'Volufine 143 TOF Ad',
+    category: 'AI Content',
+    subCategory: 'DTC Ads',
+    image: '',
+    youtubeId: '',
+    tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
+    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/VOLUFINE-143-TOF-VIDEOAD-HD%201080p.mov',
+    aspect: 'vertical',
+    highlight: true,
+  },
+  {
     id: 12,
     title: 'VEO3 Podcast Edit',
     category: 'AI Content',
@@ -155,16 +179,17 @@ const isDirectVideo = (url: string | null): boolean => {
   return (
     lowercase.endsWith('.mp4') || 
     lowercase.endsWith('.webm') || 
-    lowercase.endsWith('.mp4') || 
+    lowercase.endsWith('.mov') || 
     lowercase.endsWith('.m4v') ||
     lowercase.includes('backblazeb2.com') ||
+    lowercase.includes('r2.dev') ||
     (!lowercase.includes('youtube.com') && !lowercase.includes('youtu.be') && !lowercase.includes('embed'))
   );
 };
 
 const FILTERS = ['Featured', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
-const AI_SUBCATEGORIES = ['All AI', 'UGC', 'Talking Head', 'VFX & Motion'] as const;
+const AI_SUBCATEGORIES = ['All AI', 'UGC', 'Talking Head', 'VFX & Motion', 'DTC Ads'] as const;
 type AISubCategory = typeof AI_SUBCATEGORIES[number];
 
 const filterToSlug = (filter: string): string => {
