@@ -12,7 +12,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Podcast Editing', 'Multi-Cam'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20C4C%20Podcast%20S3E1%200001-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/16x9%20C4C%20Podcast%20S3E1%200001-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: true,
   },
@@ -23,7 +23,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Trailer', 'Sound Design'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: false,
   },
@@ -36,7 +36,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Podcast Clip', 'Talking Head'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/9x16%20C4C%20Podcast%20S3E1%200001-HD%201080p.mov',
+    videoUrl: 'https://assets.cedcantong.site/9x16%20C4C%20Podcast%20S3E1%200001-HD%201080p.mov',
     aspect: 'vertical',
     highlight: false,
   },
@@ -47,7 +47,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Talking Head', 'Clean Edit'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/TT%20sample%20edit%204(1).mp4',
+    videoUrl: 'https://assets.cedcantong.site/TT%20sample%20edit%204(1).mp4',
     aspect: 'vertical',
     highlight: false,
   },
@@ -58,7 +58,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['3D Graphics', 'Animation'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Sample%20Edit%20%231-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/Sample%20Edit%20%231-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -69,7 +69,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI Gen', 'Talking Head'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/AI%20Talking%20Head-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -80,7 +80,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Action', 'B-Rolls'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/MMA-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/MMA-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: false,
   },
@@ -93,7 +93,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Commercial', 'Corporate'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: true,
   },
@@ -104,7 +104,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Storytelling', 'Sales'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Shane%20Ads%20(TEST%20AD%201_Video%232)-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/Shane%20Ads%20(TEST%20AD%201_Video%232)-HD%201080p.mp4',
     aspect: 'horizontal',
     highlight: false,
   },
@@ -118,7 +118,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/VOLUFINE-142-TOF-VIDEOAD-HD%201080p.mov',
+    videoUrl: 'https://assets.cedcantong.site/VOLUFINE-142-TOF-VIDEOAD-HD%201080p.mov',
     aspect: 'vertical',
     highlight: true,
   },
@@ -130,7 +130,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/VOLUFINE-143-TOF-VIDEOAD-HD%201080p.mov',
+    videoUrl: 'https://assets.cedcantong.site/VOLUFINE-143-TOF-VIDEOAD-HD%201080p.mov',
     aspect: 'vertical',
     highlight: true,
   },
@@ -142,7 +142,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI Content', 'Podcast Format'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
+    videoUrl: 'https://assets.cedcantong.site/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -154,7 +154,7 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['AI', 'Talking Head'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/AI%20Talking%20Head-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/AI%20Talking%20Head-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: true,
   },
@@ -166,13 +166,13 @@ const PROJECTS = [
     image: '',
     youtubeId: '',
     tags: ['Speedramp', 'VFX'],
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/C2%20Speedramp-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/C2%20Speedramp-HD%201080p.mp4',
     aspect: 'vertical',
     highlight: false,
   }
 ];
 
-// Helper to check if the video URL is a direct media file (e.g., Backblaze B2, MP4, WebM)
+// Helper to check if the video URL is a direct media file (e.g., Backblaze B2, R2, assets.cedcantong.site, MP4, MOV, WebM)
 const isDirectVideo = (url: string | null): boolean => {
   if (!url) return false;
   const lowercase = url.toLowerCase();
@@ -183,6 +183,7 @@ const isDirectVideo = (url: string | null): boolean => {
     lowercase.endsWith('.m4v') ||
     lowercase.includes('backblazeb2.com') ||
     lowercase.includes('r2.dev') ||
+    lowercase.includes('assets.cedcantong.site') ||
     (!lowercase.includes('youtube.com') && !lowercase.includes('youtu.be') && !lowercase.includes('embed'))
   );
 };

@@ -7,7 +7,7 @@ const PREVIEW_CLIPS = [
     label: 'Shorts/Reels',
     icon: <Smartphone size={14} />,
     title: 'Ced Showcase (Vertical)',
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Sample%20Edit%20%231-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/Sample%20Edit%20%231-HD%201080p.mp4',
     aspect: 'vertical',
   },
   {
@@ -15,7 +15,7 @@ const PREVIEW_CLIPS = [
     label: 'Podcast',
     icon: <Monitor size={14} />,
     title: 'Cases 4 Causes (Multi-Cam)',
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
     aspect: 'horizontal',
   },
   {
@@ -23,7 +23,7 @@ const PREVIEW_CLIPS = [
     label: 'Commercial/VSL',
     icon: <Sparkles size={14} />,
     title: 'Sophie Feb Ad (Promo)',
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
+    videoUrl: 'https://assets.cedcantong.site/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
     aspect: 'horizontal',
   }
 ];

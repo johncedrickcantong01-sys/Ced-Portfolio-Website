@@ -72,7 +72,7 @@ const YOUTUBE_PROJECTS = [
     title: 'VEO3 Podcast Edit',
     category: 'AI Content',
     youtubeId: '',
-    videoUrl: 'https://pub-8f59952f7b104dadbca9bf6c3003b9d6.r2.dev/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
+    videoUrl: 'https://assets.cedcantong.site/EDITED%20VEO3%20Test%20Assignment%20%E2%80%93%20Podcast%20Format.mp4',
     tags: ['AI Content', 'Podcast Format'],
     aspect: 'vertical',
   },
