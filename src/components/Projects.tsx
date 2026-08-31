@@ -111,30 +111,6 @@ const PROJECTS = [
 
   // AI Contents
   {
-    id: 13,
-    title: 'Volufine 142 TOF Ad',
-    category: 'AI Content',
-    subCategory: 'DTC Ads',
-    image: '',
-    youtubeId: '',
-    tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
-    videoUrl: 'https://assets.cedcantong.site/VOLUFINE-142-TOF-VIDEOAD-HD%201080p.mov',
-    aspect: 'vertical',
-    highlight: true,
-  },
-  {
-    id: 14,
-    title: 'Volufine 143 TOF Ad',
-    category: 'AI Content',
-    subCategory: 'DTC Ads',
-    image: '',
-    youtubeId: '',
-    tags: ['AI Content', 'DTC Ads', 'Ecommerce'],
-    videoUrl: 'https://assets.cedcantong.site/VOLUFINE-143-TOF-VIDEOAD-HD%201080p.mov',
-    aspect: 'vertical',
-    highlight: true,
-  },
-  {
     id: 12,
     title: 'VEO3 Podcast Edit',
     category: 'AI Content',
@@ -190,7 +166,7 @@ const isDirectVideo = (url: string | null): boolean => {
 
 const FILTERS = ['Featured', 'Shorts/Reels', 'Commercial / VSL', 'Podcast', 'AI Content'];
 
-const AI_SUBCATEGORIES = ['All AI', 'UGC', 'Talking Head', 'VFX & Motion', 'DTC Ads'] as const;
+const AI_SUBCATEGORIES = ['All AI', 'UGC', 'Talking Head', 'VFX & Motion'] as const;
 type AISubCategory = typeof AI_SUBCATEGORIES[number];
 
 const filterToSlug = (filter: string): string => {
