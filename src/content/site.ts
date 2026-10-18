@@ -35,6 +35,7 @@ export const heroAd: HeroAd | null = null;
 
 // Each line reads `${figure} ${text}`; the last one waits on Ced (deck: [placeholder]).
 export const proof = [
+  { figure: "4", text: "years as a video editor" },
   { figure: "50+", text: "ads since August 2026" },
   { figure: "9", text: "ads in one week" },
   { figure: "3 to 5", text: "days from brief to delivery" },
