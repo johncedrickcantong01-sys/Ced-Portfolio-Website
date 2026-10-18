@@ -17,43 +17,94 @@
      sections until T8 removes them. Spacing stays on Tailwind's 4 px scale. */
   --color-bay: #0E0F11;     /* edit-bay black: the ground */
   --color-frame: #1B1D21;   /* the picture area: reel and media boxes */
-  --color-paper: #F1EEE6;   /* title-card white: main text */
+  --color-paper: #F1EEE6;   /* main text */
   --color-dim: #A3A098;     /* secondary text */
   --color-caption: #F2C80F; /* caption yellow: Book a call and the focus ring only */
   --color-rule: #2E3036;    /* hairlines between items */
 
-  --font-title: "Imbue", Georgia, serif;
-  --font-text: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-text: "Geist Variable", "Helvetica Neue", Arial, sans-serif;
 
   /* One scale, fluid from 375 px to 1440 px wide */
   --text-small: clamp(0.875rem, 0.853rem + 0.094vw, 0.9375rem);
   --text-small--line-height: 1.5;
   --text-body: clamp(1rem, 0.956rem + 0.188vw, 1.125rem);
-  --text-body--line-height: 1.6;
-  --text-lead: clamp(1.125rem, 0.993rem + 0.563vw, 1.5rem);
-  --text-lead--line-height: 1.45;
-  --text-figure: clamp(2.25rem, 1.722rem + 2.254vw, 3.75rem);
+  --text-body--line-height: 1.55;
+  --text-figure: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);
   --text-figure--line-height: 1;
-  --text-display: clamp(3rem, 0.887rem + 9.014vw, 9rem);
-  --text-display--line-height: 0.95;
-  --text-display--letter-spacing: -0.01em;
+  --text-figure--letter-spacing: -0.02em;
+  --text-display: clamp(2.75rem, 2.046rem + 3.005vw, 4.75rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.03em;
 }
 
+/* Yellow ring with a bay gap, so it reads on the ground, the frame and footage alike */
 @utility focus-ring {
   &:focus-visible {
     outline: 2px solid var(--color-caption);
-    outline-offset: 3px;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-bay);
   }
+}
+
+/* The empty reel frame until Ced's ad is cut: the frame surface, a soft
+   vignette and still grain, all in CSS (no request). */
+@utility reel-placeholder {
+  background:
+    radial-gradient(90% 70% at 62% 38%, rgb(241 238 230 / 0.09), transparent 70%),
+    radial-gradient(140% 110% at 50% 45%, transparent 45%, rgb(0 0 0 / 0.55) 100%),
+    var(--color-frame);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Bottom scrim under the hero text. Below the fade (the text area) the bay
+   black never drops under 0.65 alpha: paper text keeps 5.19:1 over white
+   footage (findings D-T7). */
+@utility hero-scrim {
+  --fade: 16rem;
+  padding-top: var(--fade);
+  /* the fade above the text eases out (smoothstep), so it leaves no edge */
+  background-image: linear-gradient(
+    to top,
+    rgb(14 15 17 / 0.8),
+    rgb(14 15 17 / 0.65) calc(100% - var(--fade)),
+    rgb(14 15 17 / 0.62) calc(100% - var(--fade) * 0.875),
+    rgb(14 15 17 / 0.55) calc(100% - var(--fade) * 0.75),
+    rgb(14 15 17 / 0.45) calc(100% - var(--fade) * 0.625),
+    rgb(14 15 17 / 0.33) calc(100% - var(--fade) * 0.5),
+    rgb(14 15 17 / 0.2) calc(100% - var(--fade) * 0.375),
+    rgb(14 15 17 / 0.1) calc(100% - var(--fade) * 0.25),
+    rgb(14 15 17 / 0.03) calc(100% - var(--fade) * 0.125),
+    rgb(14 15 17 / 0)
+  );
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 7rem; /* the sticky header never covers a focused element */
+    color-scheme: dark;
+    --header-h: 5.75rem; /* the sticky header: two rows on phones */
+    scroll-padding-top: calc(var(--header-h) + 1rem); /* the header never covers a focused element */
     background-color: var(--color-background);
     color: var(--color-text-main);
   }
   
+  @media (width >= 48rem) {
+    html {
+      --header-h: 3.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
     @apply font-body antialiased overflow-x-hidden w-full;
   }

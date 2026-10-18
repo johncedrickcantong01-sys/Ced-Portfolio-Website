@@ -1,15 +1,15 @@
 import { proof } from "../content/site";
 
-// Each proof point reads as one line of credits: the figure in the title face,
-// the words after it on the same baseline.
+// Under the frame, one line of credits per proof point: the figure, then its
+// words on the same baseline. Same left edge as the header and the hero text.
 export default function ProofStrip() {
   return (
     <section className="bg-bay font-text text-paper">
-      <ul className="mx-auto grid max-w-[1440px] gap-x-12 px-5 pt-8 pb-12 md:grid-cols-2 md:px-12 lg:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-x-6 gap-y-6 px-6 pt-8 pb-16 md:px-13 md:pt-10 lg:grid-cols-4 lg:gap-x-10">
         {proof.map((item) => (
-          <li key={item.text} className="border-t border-rule pt-4 pb-6">
-            <p className="text-body text-dim">
-              <span className={`font-title text-figure ${item.placeholder ? "" : "text-paper"}`}>{item.figure}</span>{" "}
+          <li key={item.text}>
+            <p className="text-small text-dim">
+              <span className={`text-figure font-medium ${item.placeholder ? "" : "text-paper"}`}>{item.figure}</span>{" "}
               {item.text}
             </p>
           </li>

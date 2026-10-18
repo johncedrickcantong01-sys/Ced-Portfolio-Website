@@ -7,15 +7,14 @@ import {
 } from "react-router";
 import type { ReactNode } from "react";
 import type { Route } from "./+types/root";
-import "@fontsource/imbue/latin-400.css";
-import "@fontsource/schibsted-grotesk/latin-400.css";
-import "@fontsource/schibsted-grotesk/latin-600.css";
-import imbueWoff2 from "@fontsource/imbue/files/imbue-latin-400-normal.woff2?url";
+import "@fontsource-variable/geist/wght.css";
+import geistWoff2 from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
 import "./index.css";
 
-// The display face sets the hero headline, so it loads first.
+// Geist sets every word on the page; its latin file (one variable font for
+// all weights) loads first.
 export const links: Route.LinksFunction = () => [
-  { rel: "preload", href: imbueWoff2, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "preload", href: geistWoff2, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -24,6 +23,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#0E0F11" />
         <title>Ced Cantong | Video Editor</title>
         <Meta />
         <Links />
