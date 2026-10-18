@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Play, X, Link2, Check } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router';
 
 // Template data for projects with interactive video URLs
 const PROJECTS = [
