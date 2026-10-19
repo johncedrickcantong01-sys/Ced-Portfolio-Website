@@ -55,9 +55,10 @@ export default function Book() {
           </div>
           {/* The call's frame: Pick a time sits in it, and the calendar opens in the same place. */}
           <div className="flex flex-col lg:col-span-6">
-            <div className="flex min-h-56 flex-1 flex-col justify-end overflow-hidden rounded-xl bg-frame outline-1 -outline-offset-1 outline-paper/10 md:rounded-2xl">
+            {/* No overflow clip: the calendar takes the corners itself, so its focus ring shows. */}
+            <div className="flex min-h-56 flex-1 flex-col justify-end rounded-xl bg-frame outline-1 -outline-offset-1 outline-paper/10 md:rounded-2xl">
               {calendarOpen ? (
-                <iframe ref={calendarRef} src={book.calendly} title={book.pickTime} className="h-175 w-full bg-paper" />
+                <iframe ref={calendarRef} src={book.calendly} title={book.pickTime} className="focus-ring h-175 w-full rounded-[inherit] bg-paper" />
               ) : (
                 <div className="p-4 md:p-10">
                   <a

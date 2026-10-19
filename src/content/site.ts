@@ -72,7 +72,7 @@ export const proof = [
   { figure: "50+", text: "ads since August 2026" },
   { figure: "9", text: "ads in one week" },
   { figure: "3 to 5", text: "days from brief to delivery" },
-  { figure: "[placeholder]", text: "client result", placeholder: true },
+  { figure: "[placeholder]", text: "", placeholder: true },
 ];
 
 export const workSection = {

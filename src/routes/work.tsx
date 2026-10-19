@@ -17,7 +17,14 @@ export function loader({ params }: Route.LoaderArgs) {
 export const meta: Route.MetaFunction = ({ loaderData }) =>
   loaderData
     ? pageMeta(`/work/${loaderData.item.slug}/`, caseTitle(loaderData.item), caseDescription(loaderData.item))
-    : [{ title: "Page not found | Ced Cantong" }];
+    : [
+        { title: "Page not found | Ced Cantong" },
+        {
+          name: "description",
+          content:
+            "This page doesn't exist. The home page has Ced Cantong's video ads for every funnel stage and a link to book a call.",
+        },
+      ];
 
 // The deck's [placeholder] marker in dim, the rest as it is.
 function Fill({ text }: { text: string }) {
