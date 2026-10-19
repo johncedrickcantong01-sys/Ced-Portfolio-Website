@@ -1,113 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0A0A0A;
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-primary: #ffe000;
-  --color-primary-hover: #fff37a;
-  --color-text-main: #F0F0F0;
-  --color-text-muted: rgba(255, 255, 255, 0.75);
-  --color-border: rgba(255, 255, 255, 0.1);
+  /* Tokens from findings D-T7 (T8 adds the heading step, D-T8). Spacing
+     stays on Tailwind's 4 px scale. */
+  --color-bay: #0E0F11;     /* edit-bay black: the ground */
+  --color-frame: #1B1D21;   /* the picture area: reel and media boxes */
+  --color-paper: #F1EEE6;   /* main text */
+  --color-dim: #A3A098;     /* secondary text */
+  --color-caption: #F2C80F; /* caption yellow: Book a call and the focus ring only */
+  --color-rule: #2E3036;    /* hairlines between items */
 
-  --font-display: "Inter", sans-serif;
-  --font-body: "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-text: "Geist Variable", "Helvetica Neue", Arial, sans-serif;
+
+  /* One scale, fluid from 375 px to 1440 px wide */
+  --text-small: clamp(0.875rem, 0.853rem + 0.094vw, 0.9375rem);
+  --text-small--line-height: 1.5;
+  --text-body: clamp(1rem, 0.956rem + 0.188vw, 1.125rem);
+  --text-body--line-height: 1.55;
+  --text-figure: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.02em;
+  --text-heading: clamp(2rem, 1.648rem + 1.502vw, 3rem); /* section h2: 32 to 48 px */
+  --text-heading--line-height: 1.05;
+  --text-heading--letter-spacing: -0.025em;
+  --text-display: clamp(2.75rem, 2.046rem + 3.005vw, 4.75rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.03em;
+}
+
+/* Yellow ring with a bay gap, so it reads on the ground, the frame and footage alike */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-caption);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-bay);
+  }
+}
+
+/* The empty reel frame until Ced's ad is cut: the frame surface, a soft
+   vignette and still grain, all in CSS (no request). */
+@utility reel-placeholder {
+  background:
+    radial-gradient(90% 70% at 62% 38%, rgb(241 238 230 / 0.09), transparent 70%),
+    radial-gradient(140% 110% at 50% 45%, transparent 45%, rgb(0 0 0 / 0.55) 100%),
+    var(--color-frame);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Bottom scrim under the hero text. Below the fade (the text area) the bay
+   black never drops under 0.65 alpha: paper text keeps 5.19:1 over white
+   footage (findings D-T7). */
+@utility hero-scrim {
+  --fade: 16rem;
+  padding-top: var(--fade);
+  /* the fade above the text eases out (smoothstep), so it leaves no edge */
+  background-image: linear-gradient(
+    to top,
+    rgb(14 15 17 / 0.8),
+    rgb(14 15 17 / 0.65) calc(100% - var(--fade)),
+    rgb(14 15 17 / 0.62) calc(100% - var(--fade) * 0.875),
+    rgb(14 15 17 / 0.55) calc(100% - var(--fade) * 0.75),
+    rgb(14 15 17 / 0.45) calc(100% - var(--fade) * 0.625),
+    rgb(14 15 17 / 0.33) calc(100% - var(--fade) * 0.5),
+    rgb(14 15 17 / 0.2) calc(100% - var(--fade) * 0.375),
+    rgb(14 15 17 / 0.1) calc(100% - var(--fade) * 0.25),
+    rgb(14 15 17 / 0.03) calc(100% - var(--fade) * 0.125),
+    rgb(14 15 17 / 0)
+  );
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    background-color: var(--color-background);
-    color: var(--color-text-main);
+    color-scheme: dark;
+    --header-h: 5.75rem; /* the sticky header: two rows on phones */
+    scroll-padding-top: calc(var(--header-h) + 1rem); /* the header never covers a focused element or an anchored heading */
+    background-color: var(--color-bay);
+    color: var(--color-paper);
   }
-  
+
+  @media (width >= 48rem) {
+    html {
+      --header-h: 3.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
-    @apply font-body antialiased overflow-x-hidden w-full;
+    @apply font-text antialiased;
   }
-  
-  /* Custom scrollbar for webkit */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-background); 
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-border); 
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-muted); 
-  }
-}
-
-@layer components {
-  /* Typography */
-  .heading-xl {
-    @apply font-display text-[8vw] md:text-6xl lg:text-[72px] font-bold leading-[1.0] tracking-tighter uppercase;
-  }
-  .heading-lg {
-    @apply font-display text-4xl md:text-5xl lg:text-[64px] font-light tracking-tight;
-  }
-  .heading-md {
-    @apply font-display text-xl md:text-2xl font-medium tracking-tight uppercase;
-  }
-  .text-body-lg {
-    @apply font-body text-[15px] md:text-base leading-relaxed opacity-85 font-normal text-text-main/90;
-  }
-  .text-label {
-    @apply font-sans text-[10px] font-semibold tracking-[0.3em] uppercase opacity-50;
-  }
-  
-  /* Interactive Elements */
-  .btn-primary {
-    @apply inline-flex items-center justify-center bg-primary text-black font-sans text-[11px] font-bold tracking-widest uppercase px-6 py-3 transition-all duration-300 shadow-md shadow-primary/10 hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0;
-  }
-  .btn-primary:hover {
-    box-shadow: 0 10px 20px -10px rgba(255, 224, 0, 0.4);
-  }
-  
-  .btn-secondary {
-    @apply inline-flex items-center justify-center bg-surface border border-border text-text-main font-sans text-[11px] font-semibold tracking-widest uppercase px-8 py-4 transition-all duration-300 hover:bg-white/10 hover:border-white/20;
-  }
-  
-  /* Layout */
-  .section-padding {
-    @apply py-16 md:py-[100px];
-  }
-  .container-max {
-    @apply w-full max-w-[1440px] mx-auto px-6 md:px-12;
-  }
-  
-  /* Forms */
-  .input-brutal {
-    @apply w-full bg-surface border border-border text-text-main font-body py-3 px-4 focus:ring-0 focus:border-text-main/40 transition-colors outline-none placeholder:text-text-muted placeholder:font-sans placeholder:text-[11px] placeholder:tracking-widest placeholder:uppercase;
-  }
-  
-  /* Decorators */
-  .chip {
-    @apply border border-border text-text-main px-2 py-1 font-sans text-[9px] uppercase tracking-wider rounded-none whitespace-nowrap bg-surface;
-  }
-}
-
-/* Custom continuous scrolling marquee keyframes and classes */
-@keyframes marquee-scroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-marquee-infinite {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 45s linear infinite;
-  will-change: transform;
-}
-
-/* Pause the marquee when hovering the items container */
-.animate-marquee-infinite:hover {
-  animation-play-state: paused;
 }
