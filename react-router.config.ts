@@ -1,9 +1,9 @@
 import type { Config } from "@react-router/dev/config";
+import { work } from "./src/content/work";
 
-// The case-study slugs from src/content/work.ts join this list in T9,
-// together with the /work/:slug route.
+// Every page is prerendered: home, /book and one case study per work.ts entry.
 export default {
   appDirectory: "src",
   ssr: false,
-  prerender: ["/", "/book"],
+  prerender: ["/", "/book", ...work.map((item) => `/work/${item.slug}`)],
 } satisfies Config;
