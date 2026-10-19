@@ -2,9 +2,29 @@
 // (docs/plans/2026-10-15-website-revamp/copy-deck.md, approved 19 Oct 2026).
 // Added words the deck lacks: the headings "About" and "FAQ", the process
 // labels "Approval" and "Days" (findings D-T8).
+import type { MetaDescriptor } from "react-router";
 
 // Copy Ced still has to give (deck: [placeholder]); shown on the page in dim.
 export const placeholder = "[placeholder]";
+
+// The production origin, for canonicals, og:url, the schema and the sitemap.
+export const siteUrl = "https://www.cedcantong.site";
+
+// One page's search and sharing tags. path ends with the slash Pages serves
+// ("/", "/book/", "/work/<slug>/"; findings F20). og:image and twitter:card
+// come with the share images (plan TM).
+export function pageMeta(path: string, title: string, description: string): MetaDescriptor[] {
+  const url = siteUrl + path;
+  return [
+    { title },
+    { name: "description", content: description },
+    { tagName: "link", rel: "canonical", href: url },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: url },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+  ];
+}
 
 export const bookCall = { label: "Book a call", href: "/book" };
 

@@ -3,8 +3,8 @@ import type { Route } from "./+types/work";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import VideoFacade from "../components/VideoFacade";
-import { bookCall, placeholder } from "../content/site";
-import { caseStudy, work } from "../content/work";
+import { bookCall, pageMeta, placeholder } from "../content/site";
+import { caseDescription, caseStudy, caseTitle, work } from "../content/work";
 
 // Runs at build time only (ssr: false): each work.ts slug is prerendered,
 // any other slug is a 404 (on the host, public/404.html answers it).
@@ -14,9 +14,10 @@ export function loader({ params }: Route.LoaderArgs) {
   return { item: work[i], next: work[(i + 1) % work.length] };
 }
 
-export const meta: Route.MetaFunction = ({ loaderData }) => [
-  { title: loaderData ? `${loaderData.item.title} | Ced Cantong` : "Page not found | Ced Cantong" },
-];
+export const meta: Route.MetaFunction = ({ loaderData }) =>
+  loaderData
+    ? pageMeta(`/work/${loaderData.item.slug}/`, caseTitle(loaderData.item), caseDescription(loaderData.item))
+    : [{ title: "Page not found | Ced Cantong" }];
 
 // The deck's [placeholder] marker in dim, the rest as it is.
 function Fill({ text }: { text: string }) {

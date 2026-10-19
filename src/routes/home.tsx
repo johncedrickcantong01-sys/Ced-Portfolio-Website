@@ -10,11 +10,45 @@ import Trust from "../components/Trust";
 import AboutCed from "../components/AboutCed";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
-import { bookCall, closing, homeMeta } from "../content/site";
+import { about, bookCall, closing, email, homeMeta, offer, pageMeta, siteUrl } from "../content/site";
+
+// The schema says only what the page says: no prices, no ratings, no FAQ
+// schema (findings D6). sameAs waits for Ced's profile links (plan TM); no
+// areaServed, since the positioning brief names none. schema.org allows
+// serviceType only on a Service, not on ProfessionalService, so the four
+// packages (the page's names) are Services in makesOffer, with no price.
+const url = `${siteUrl}/`;
+const image = siteUrl + about.portrait.src;
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${url}#business`,
+      name: "Ced Cantong",
+      url,
+      email,
+      image,
+      description: homeMeta.description,
+      founder: { "@id": `${url}#person` },
+      makesOffer: offer.packages
+        .filter((item) => item.name !== "Add-ons")
+        .map((item) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: item.name } })),
+    },
+    {
+      "@type": "Person",
+      "@id": `${url}#person`,
+      name: "Ced Cantong",
+      url,
+      image,
+      jobTitle: "DTC video ad editor",
+    },
+  ],
+};
 
 export const meta: Route.MetaFunction = () => [
-  { title: homeMeta.title },
-  { name: "description", content: homeMeta.description },
+  ...pageMeta("/", homeMeta.title, homeMeta.description),
+  { "script:ld+json": schema },
 ];
 
 export default function Home() {

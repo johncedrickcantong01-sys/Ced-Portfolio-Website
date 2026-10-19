@@ -3,12 +3,9 @@ import type { MouseEvent } from "react";
 import type { Route } from "./+types/book";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { book, email } from "../content/site";
+import { book, email, pageMeta } from "../content/site";
 
-export const meta: Route.MetaFunction = () => [
-  { title: book.title },
-  { name: "description", content: book.description },
-];
+export const meta: Route.MetaFunction = () => pageMeta("/book/", book.title, book.description);
 
 // "Pick a time" is a plain link to Calendly, so it works without JS. With JS,
 // the click mounts Calendly inline instead; nothing loads from calendly.com

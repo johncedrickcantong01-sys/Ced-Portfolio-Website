@@ -57,6 +57,23 @@ export type Work = {
   uploadDate: string | null;
 };
 
+// The case study's <title>: the entry's title + " | Ced Cantong" (deck: Route
+// titles and descriptions).
+export function caseTitle(item: Work) {
+  return `${item.title} | Ced Cantong`;
+}
+
+// The deck's description pattern, filled from the entry; the brand ("a
+// <category> DTC brand") stands for "a [category] DTC brand". Ced's spec ads
+// have no pattern in the deck yet, so theirs is the placeholder.
+export function caseDescription(item: Work) {
+  if (item.brand === "Spec ad") return placeholder;
+  // The format mid-sentence: "an AI storyline ad", "a talking head with B-roll".
+  const format = /^[A-Z][a-z]/.test(item.format) ? item.format[0].toLowerCase() + item.format.slice(1) : item.format;
+  const a = format.startsWith("AI") ? "an" : "a";
+  return `How I made ${a} ${format} for ${item.brand} at the ${item.stage} stage: the brief, the constraints and what was delivered in ${item.days} days.`;
+}
+
 // The case-study template's labels (deck: Case studies, Template).
 export const caseStudy = {
   brand: "Brand",
