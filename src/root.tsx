@@ -24,7 +24,6 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#0E0F11" />
-        <title>Ced Cantong | Video Editor</title>
         <Meta />
         <Links />
       </head>
