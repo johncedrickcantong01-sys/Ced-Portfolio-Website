@@ -24,10 +24,22 @@ export default function WorkGrid() {
                 to={`/work/${item.slug}`}
                 className="group focus-ring flex items-end gap-5 rounded-xl md:block md:rounded-2xl"
               >
-                <div
-                  aria-hidden="true"
-                  className="reel-placeholder relative aspect-9/16 w-[42%] shrink-0 overflow-hidden rounded-xl outline-1 -outline-offset-1 outline-paper/10 transition-[outline-color] group-hover:outline-paper/40 md:w-full md:rounded-2xl"
-                />
+                {item.poster ? (
+                  <img
+                    src={item.poster}
+                    alt=""
+                    width={720}
+                    height={1280}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-9/16 w-[42%] shrink-0 rounded-xl object-cover outline-1 -outline-offset-1 outline-paper/10 transition-[outline-color] group-hover:outline-paper/40 md:w-full md:rounded-2xl"
+                  />
+                ) : (
+                  <div
+                    aria-hidden="true"
+                    className="reel-placeholder relative aspect-9/16 w-[42%] shrink-0 overflow-hidden rounded-xl outline-1 -outline-offset-1 outline-paper/10 transition-[outline-color] group-hover:outline-paper/40 md:w-full md:rounded-2xl"
+                  />
+                )}
                 <div className="min-w-0 md:mt-5">
                   <p className="flex flex-wrap gap-x-3 text-small">
                     <span className="font-medium text-paper">{item.stage}</span>
