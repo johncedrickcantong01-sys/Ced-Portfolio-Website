@@ -11,7 +11,7 @@ export const placeholder = "[placeholder]";
 export const siteUrl = "https://www.cedcantong.site";
 
 // One page's search and sharing tags. path ends with the slash Pages serves
-// ("/", "/book/", "/work/<slug>/"; findings F20). og:image and twitter:card
+// ("/", "/book/"; findings F20). og:image and twitter:card
 // come with the share images (plan TM).
 export function pageMeta(path: string, title: string, description: string): MetaDescriptor[] {
   const url = siteUrl + path;
@@ -80,6 +80,10 @@ export const workSection = {
   intro:
     "Every ad is tagged by funnel stage. TOF ads stop cold viewers and explain the problem, MOF ads give proof and answer doubts, BOF ads close on the product and the offer.",
   note: "Client brands stay unnamed and their products are blurred.",
+  // The video buttons' names (plan TV), read out with the ad's format.
+  play: "Play",
+  pause: "Pause",
+  sound: "Sound",
 };
 
 export const howIWork = {

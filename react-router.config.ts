@@ -1,9 +1,8 @@
 import type { Config } from "@react-router/dev/config";
-import { work } from "./src/content/work";
 
-// Every page is prerendered: home, /book and one case study per work.ts entry.
+// Every page is prerendered: home and /book.
 export default {
   appDirectory: "src",
   ssr: false,
-  prerender: ["/", "/book", ...work.map((item) => `/work/${item.slug}`)],
+  prerender: ["/", "/book"],
 } satisfies Config;
