@@ -84,6 +84,10 @@ export const workSection = {
   play: "Play",
   pause: "Pause",
   sound: "Sound",
+  seek: "Position",
+  fullscreen: "Full screen",
+  exitFullscreen: "Exit full screen",
+  of: "of",
 };
 
 export const howIWork = {

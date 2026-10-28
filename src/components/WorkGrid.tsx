@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { Maximize, Minimize, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { placeholder, workSection } from "../content/site";
 import { work, type Work } from "../content/work";
 
@@ -64,6 +64,10 @@ function AdFrame({
   const [still, setStill] = useState(false);
   const [paused, setPaused] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [full, setFull] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
 
@@ -110,6 +114,27 @@ function AdFrame({
     }
   }
 
+  useEffect(() => {
+    const onChange = () => setFull(document.fullscreenElement === frameRef.current);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  // Fullscreen takes the whole frame so the bar and buttons stay; iPhone
+  // Safari has no element fullscreen, so it gets its own video player.
+  function toggleFull() {
+    const box = frameRef.current;
+    const video = ref.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+    if (!box || !video) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+      return;
+    }
+    start(true);
+    if (box.requestFullscreen) box.requestFullscreen().catch(() => {});
+    else video.webkitEnterFullscreen?.();
+  }
+
   function toggleSound() {
     if (soundOn) setSound(null);
     else start(true);
@@ -120,7 +145,7 @@ function AdFrame({
   }
 
   return (
-    <div className={`${frame} bg-frame`}>
+    <div ref={frameRef} className={`${frame} bg-frame [&:fullscreen_video]:object-contain`}>
       <video
         ref={ref}
         poster={item.poster ?? undefined}
@@ -131,8 +156,40 @@ function AdFrame({
         aria-label={item.format}
         onPlaying={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
+        onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
+        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
         className="absolute inset-0 size-full rounded-[inherit] object-cover"
       />
+      {duration > 0 && (
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 rounded-b-[inherit] bg-gradient-to-t from-bay/90 to-transparent px-3 pt-8 pb-3">
+          <input
+            type="range"
+            min={0}
+            max={duration}
+            step={0.1}
+            value={time}
+            onChange={(e) => {
+              if (ref.current) ref.current.currentTime = Number(e.target.value);
+            }}
+            aria-label={`${workSection.seek}: ${item.format}`}
+            aria-valuetext={`${clock(time)} ${workSection.of} ${clock(duration)}`}
+            className="focus-ring order-2 h-1 w-full cursor-pointer accent-caption"
+          />
+          <div className="order-1 flex items-center justify-between">
+            <span aria-hidden="true" className="font-mono text-[0.6875rem] text-paper/90 tabular-nums">
+              {clock(time)} / {clock(duration)}
+            </span>
+            <button
+              type="button"
+              onClick={toggleFull}
+              aria-label={`${full ? workSection.exitFullscreen : workSection.fullscreen}: ${item.format}`}
+              className="focus-ring -m-2 inline-flex size-9 items-center justify-center rounded-full"
+            >
+              {full ? <Minimize aria-hidden="true" className="size-4" /> : <Maximize aria-hidden="true" className="size-4" />}
+            </button>
+          </div>
+        </div>
+      )}
       {still ? (
         <button
           type="button"
@@ -167,4 +224,10 @@ function AdFrame({
       )}
     </div>
   );
+}
+
+// 272.4 → "4:32".
+function clock(seconds: number) {
+  const s = Math.floor(seconds);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
