@@ -127,7 +127,7 @@ export const howIWork = {
   ],
   total: "1 to 2 days from brief to delivery.",
   tools:
-    "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, and Director's Desk, my own 3D app for blocking and camera.",
+    "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, Claude for scripts and prompts, Blender for 3D, and Director's Desk, my own 3D app for blocking and camera.",
 };
 
 export const offer = {
