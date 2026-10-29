@@ -128,6 +128,20 @@ export const howIWork = {
   total: "1 to 2 days from brief to delivery.",
   tools:
     "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, Claude for scripts and prompts, Blender for 3D, and Director's Desk, my own 3D app for blocking and camera.",
+  // The running tool dock, copied from the old site (Hermes out, Claude and
+  // Blender in, Ced 30 Oct 2026). Hover or tap an icon for its name and line.
+  dockLabel: "Tools I use",
+  dock: [
+    { name: "Final Cut Pro", icon: "final-cut-pro", text: "My core workspace for high-speed timeline editing, precise cuts, and dialing in the perfect video pacing." },
+    { name: "Apple Motion", icon: "apple-motion", text: "Where I design custom kinetic typography and subtle visual assets to keep the viewer's eyes locked onto the screen." },
+    { name: "Canva Affinity", icon: "affinity", text: "My design ecosystem for quickly knocking out frame mockups, styling high-res vector graphics, and building clean visual assets." },
+    { name: "Higgsfield AI", icon: "higgsfield", text: "My secret weapon for generating cinematic B-roll ideas and blending hyper-realistic AI effects directly into real footage." },
+    { name: "Claude", icon: "claude", text: "My partner for scripts, shot lists and clip prompts, and the code behind my own production tools." },
+    { name: "Blender", icon: "blender", text: "Where I build 3D scenes, props and camera tests that feed the AI shots." },
+    { name: "Notion", icon: "notion", text: "The ultimate dashboard for mapping concepts, tracking notes, and running production calendars." },
+    { name: "Remotion", icon: "remotion", text: "A powerful engineering tool that lets me programmatically code, automate, and render complex template layouts at scale." },
+    { name: "Freeform", icon: "freeform", text: "An infinite digital canvas to brain-dump ideas, map storyboards, and nail down the story arc." },
+  ],
 };
 
 export const offer = {

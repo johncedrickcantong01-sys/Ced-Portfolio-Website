@@ -1,4 +1,5 @@
 import { howIWork } from "../content/site";
+import ToolDock from "./ToolDock";
 
 // How I work: one ad's before and after as a strip of three joined frames
 // (source, step, finished frame) with the intro beside it as the section's
@@ -65,6 +66,8 @@ export default function HowIWork() {
           <p className="text-figure font-medium lg:col-span-6">{howIWork.total}</p>
           <p className="mt-4 max-w-[60ch] text-small text-pretty text-dim lg:col-span-6 lg:mt-0">{howIWork.tools}</p>
         </div>
+
+        <ToolDock />
       </div>
     </section>
   );
