@@ -59,7 +59,8 @@ export const hero = {
 // each with its first frame as the poster. Files in public/media/reel/.
 export const heroReel = Array.from({ length: 12 }, (_, i) => {
   const id = `reel-${String(i + 1).padStart(2, "0")}`;
-  return { video: `/media/reel/${id}.mp4`, poster: `/media/reel/${id}.webp` };
+  // Clips on R2 (it answers range requests, which Safari needs to play video); posters stay here.
+  return { video: `https://assets.cedcantong.site/${id}.mp4`, poster: `/media/reel/${id}.webp` };
 });
 
 // Each line reads `${figure} ${text}`.
