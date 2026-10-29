@@ -44,7 +44,7 @@ export const nav = {
 export const homeMeta = {
   title: "Ced Cantong | DTC video ad editor for every funnel stage",
   description:
-    "AI video ad editor for DTC brands and their agencies. UGC, talking head, VSLs, product ads and AI storylines, 3 to 5 days from brief to delivery.",
+    "AI video ad editor for DTC brands and their agencies. UGC, talking head, VSLs, product ads and AI storylines, 1 to 2 days from brief to delivery.",
 };
 
 export const hero = {
@@ -68,7 +68,7 @@ export const proof = [
   { figure: "4", text: "years as a video editor" },
   { figure: "50+", text: "ads since August 2026" },
   { figure: "9", text: "ads in one week" },
-  { figure: "3 to 5", text: "days from brief to delivery" },
+  { figure: "1 to 2", text: "days from brief to delivery" },
 ];
 
 export const workSection = {
@@ -125,7 +125,7 @@ export const howIWork = {
       approval: null,
     },
   ],
-  total: "3 to 5 days from brief to delivery.",
+  total: "1 to 2 days from brief to delivery.",
   tools:
     "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, and Director's Desk, my own 3D app for blocking and camera.",
 };
@@ -181,7 +181,7 @@ export const about = {
 export const faq = {
   heading: "FAQ",
   items: [
-    { question: "How long does a project take?", answer: "3 to 5 days from brief to delivery." },
+    { question: "How long does a project take?", answer: "1 to 2 days from brief to delivery." },
     {
       question: "How many revision rounds are included?",
       answer: "The paid pilot includes 2. For the other packages, we agree the number on the call.",
@@ -223,7 +223,7 @@ export const book = {
     "which formats fit that stage",
     "the package, the number of ads and the price",
     "for agencies, white-label video ad editing under NDA",
-    "the timeline: a project takes 3 to 5 days from brief to delivery",
+    "the timeline: a project takes 1 to 2 days from brief to delivery",
   ],
   pickTime: "Pick a time",
   // Today's 30-minute event; the iframe loads only after the click.
