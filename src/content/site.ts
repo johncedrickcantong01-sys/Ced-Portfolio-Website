@@ -4,8 +4,8 @@
 // labels "Approval" and "Days" (findings D-T8).
 import type { MetaDescriptor } from "react-router";
 
-// The production origin, for canonicals, og:url, the schema and the sitemap.
-export const siteUrl = "https://www.cedcantong.site";
+// The private-share origin (plan T12; www at the public launch), for canonicals, og:url, the schema and the sitemap.
+export const siteUrl = "https://work.cedcantong.site";
 
 // One page's search and sharing tags. path ends with the slash Pages serves
 // ("/", "/book/"; findings F20). og:image and twitter:card

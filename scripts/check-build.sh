@@ -6,7 +6,7 @@
 
 set -uo pipefail
 cd "$(dirname "$0")/.."
-site="https://www.cedcantong.site"
+site="https://work.cedcantong.site"
 out="build/client"
 pages=0 fails=0
 
