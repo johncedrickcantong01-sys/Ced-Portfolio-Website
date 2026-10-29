@@ -37,7 +37,6 @@ export const nav = {
   links: [
     { label: "Work", href: "/#work" },
     { label: "How I work", href: "/#how-i-work" },
-    { label: "Packages", href: "/#packages" },
   ],
 };
 
@@ -198,7 +197,7 @@ export const faq = {
     { question: "How long does a project take?", answer: "1 to 2 days from brief to delivery." },
     {
       question: "How many revision rounds are included?",
-      answer: "The paid pilot includes 2. For the other packages, we agree the number on the call.",
+      answer: "The paid pilot includes 2. For other projects, we agree the number on the call.",
     },
     {
       question: "How do you use AI?",

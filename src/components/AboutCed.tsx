@@ -1,7 +1,9 @@
 import { about } from "../content/site";
+import ToolDock from "./ToolDock";
 
 // About: the portrait in the same picture frame as the work, and the three
-// lines, the first one as the section's statement.
+// lines, the first one as the section's statement, then the tool dock
+// (on the old site it sat in About too).
 export default function AboutCed() {
   const [first, ...rest] = about.lines;
   return (
@@ -27,6 +29,9 @@ export default function AboutCed() {
                 {line}
               </p>
             ))}
+          </div>
+          <div className="md:col-span-12 lg:col-span-8">
+            <ToolDock />
           </div>
         </div>
       </div>

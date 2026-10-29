@@ -5,19 +5,16 @@ import Hero from "../components/Hero";
 import ProofStrip from "../components/ProofStrip";
 import WorkGrid from "../components/WorkGrid";
 import HowIWork from "../components/HowIWork";
-import Offer from "../components/Offer";
-import Trust from "../components/Trust";
 import AboutCed from "../components/AboutCed";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
-import { about, bookCall, closing, email, homeMeta, offer, pageMeta, siteUrl } from "../content/site";
+import { about, bookCall, closing, email, homeMeta, pageMeta, siteUrl } from "../content/site";
 import { work } from "../content/work";
 
 // The schema says only what the page says: no prices, no ratings, no FAQ
 // schema (findings D6). sameAs waits for Ced's profile links; no
-// areaServed, since the positioning brief names none. schema.org allows
-// serviceType only on a Service, not on ProfessionalService, so the four
-// packages (the page's names) are Services in makesOffer, with no price.
+// areaServed, since the positioning brief names none. No makesOffer: the
+// packages are discussed on the call, not shown (Ced, 30 Oct 2026).
 const url = `${siteUrl}/`;
 const image = siteUrl + about.portrait.src;
 const schema = {
@@ -32,9 +29,6 @@ const schema = {
       image,
       description: homeMeta.description,
       founder: { "@id": `${url}#person` },
-      makesOffer: offer.packages
-        .filter((item) => item.name !== "Add-ons")
-        .map((item) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: item.name } })),
     },
     {
       "@type": "Person",
@@ -73,8 +67,6 @@ export default function Home() {
         <ProofStrip />
         <WorkGrid />
         <HowIWork />
-        <Offer />
-        <Trust />
         <AboutCed />
         <Faq />
         {/* Book a call again: the hero's frame closes the page */}

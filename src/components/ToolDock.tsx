@@ -16,7 +16,7 @@ export default function ToolDock() {
   const tools = moving ? [...howIWork.dock, ...howIWork.dock] : howIWork.dock;
 
   return (
-    <div className="mt-10 lg:col-span-12">
+    <div className="mt-12">
       <p className="text-small font-medium">{howIWork.dockLabel}</p>
       <div
         className={`relative mt-3 w-full ${moving ? "h-[4.5rem]" : ""}`}
