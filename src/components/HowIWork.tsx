@@ -1,4 +1,4 @@
-import { howIWork, placeholder } from "../content/site";
+import { howIWork } from "../content/site";
 
 // How I work: one ad's before and after as a strip of three joined frames
 // (source, step, finished frame) with the intro beside it as the section's
@@ -20,17 +20,21 @@ export default function HowIWork() {
         </p>
 
         <div className="mt-12 grid grid-cols-3 gap-1 md:mt-16 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:mt-10">
-          {howIWork.frames.map((label, i) => (
-            <figure key={label}>
-              <div
-                aria-hidden="true"
-                className={`reel-placeholder relative aspect-9/16 overflow-hidden outline-1 -outline-offset-1 outline-paper/10 ${
+          {howIWork.frames.map((frame, i) => (
+            <figure key={frame.label}>
+              <img
+                src={frame.src}
+                alt=""
+                width={540}
+                height={960}
+                loading="lazy"
+                className={`aspect-9/16 w-full bg-frame object-cover outline-1 -outline-offset-1 outline-paper/10 ${
                   i === 0 ? "rounded-l-xl md:rounded-l-2xl" : ""
                 } ${i === howIWork.frames.length - 1 ? "rounded-r-xl md:rounded-r-2xl" : ""}`}
               />
               <figcaption className="mt-3 pr-2 text-small">
-                <span className="block font-medium text-paper">{label}</span>
-                <span className="block text-dim">{placeholder}</span>
+                <span className="block font-medium text-paper">{frame.label}</span>
+                <span className="block text-pretty text-dim">{frame.text}</span>
               </figcaption>
             </figure>
           ))}
@@ -51,10 +55,6 @@ export default function HowIWork() {
                       <dd className="inline text-dim">{step.approval}</dd>
                     </div>
                   )}
-                  <div className="mt-1">
-                    <dt className="inline font-medium">{howIWork.daysLabel}:</dt>{" "}
-                    <dd className="inline text-dim">{placeholder}</dd>
-                  </div>
                 </dl>
               </div>
             </li>

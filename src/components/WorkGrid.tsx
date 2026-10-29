@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Maximize, Minimize, Pause, Play, Volume2, VolumeX } from "lucide-react";
-import { placeholder, workSection } from "../content/site";
+import { workSection } from "../content/site";
 import { work, type Work } from "../content/work";
 
 // Selected work as a video showcase (plan TV): each ad plays muted in its 9:16
@@ -20,7 +20,7 @@ export default function WorkGrid() {
           <p className="mt-6 max-w-[46ch] text-body text-pretty text-dim">{workSection.intro}</p>
           <p className="mt-4 max-w-[46ch] text-body text-pretty text-dim">{workSection.note}</p>
         </div>
-        <ul className="mt-12 grid gap-y-8 md:grid-cols-3 md:gap-x-6 lg:col-span-8 lg:mt-0">
+        <ul className="mt-12 grid gap-y-8 md:grid-cols-2 md:gap-x-6 lg:col-span-6 lg:col-start-7 lg:mt-0">
           {work.map((item) => (
             <li key={item.slug} className="flex items-end gap-5 md:block">
               <AdFrame item={item} soundOn={sound === item.slug} setSound={setSound} />
@@ -30,7 +30,7 @@ export default function WorkGrid() {
                   <span className="text-dim">{item.brand}</span>
                 </p>
                 <h3
-                  className={`mt-3 text-figure leading-[1.15] font-medium text-balance ${item.format === placeholder ? "text-dim" : "text-paper"}`}
+                  className="mt-3 text-figure leading-[1.15] font-medium text-balance text-paper"
                 >
                   {item.format}
                 </h3>

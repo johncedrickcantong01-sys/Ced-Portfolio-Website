@@ -1,7 +1,6 @@
-import { email, nav, placeholder } from "../content/site";
+import { email, nav } from "../content/site";
 
-// The name, the email and, until Ced gives them, the placeholder for the
-// profile links. Same left edge as the header.
+// The name and the email. Same left edge as the header.
 export default function Footer() {
   return (
     <footer className="px-6 pt-16 pb-10 font-text text-small md:px-13 md:pt-24">
@@ -16,7 +15,6 @@ export default function Footer() {
         >
           {email}
         </a>
-        <p className="text-dim">{placeholder}</p>
       </div>
     </footer>
   );

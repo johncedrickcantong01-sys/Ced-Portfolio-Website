@@ -6,14 +6,14 @@ import ProofStrip from "../components/ProofStrip";
 import WorkGrid from "../components/WorkGrid";
 import HowIWork from "../components/HowIWork";
 import Offer from "../components/Offer";
-import Trust from "../components/Trust";
 import AboutCed from "../components/AboutCed";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 import { about, bookCall, closing, email, homeMeta, offer, pageMeta, siteUrl } from "../content/site";
+import { work } from "../content/work";
 
 // The schema says only what the page says: no prices, no ratings, no FAQ
-// schema (findings D6). sameAs waits for Ced's profile links (plan TM); no
+// schema (findings D6). sameAs waits for Ced's profile links; no
 // areaServed, since the positioning brief names none. schema.org allows
 // serviceType only on a Service, not on ProfessionalService, so the four
 // packages (the page's names) are Services in makesOffer, with no price.
@@ -43,6 +43,18 @@ const schema = {
       image,
       jobTitle: "DTC video ad editor",
     },
+    // Each Selected work ad, named and described as its card shows it.
+    ...work.map((item) => ({
+      "@type": "VideoObject",
+      "@id": `${url}#${item.slug}`,
+      name: `${item.stage} ${item.format}`,
+      description: `${item.stage} ${item.format} for ${item.brand}, edited by Ced Cantong.`,
+      thumbnailUrl: siteUrl + item.poster,
+      contentUrl: item.video,
+      duration: item.duration,
+      uploadDate: item.uploadDate,
+      creator: { "@id": `${url}#person` },
+    })),
   ],
 };
 
@@ -61,7 +73,6 @@ export default function Home() {
         <WorkGrid />
         <HowIWork />
         <Offer />
-        <Trust />
         <AboutCed />
         <Faq />
         {/* Book a call again: the hero's frame closes the page */}

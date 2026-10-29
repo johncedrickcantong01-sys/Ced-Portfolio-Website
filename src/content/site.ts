@@ -23,6 +23,11 @@ export function pageMeta(path: string, title: string, description: string): Meta
     { property: "og:url", content: url },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
+    // One share image for every page: the headline beside four reel frames.
+    { property: "og:image", content: `${siteUrl}/media/share.jpg` },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+    { name: "twitter:card", content: "summary_large_image" },
   ];
 }
 
@@ -60,13 +65,12 @@ export const heroReel = Array.from({ length: 12 }, (_, i) => {
   return { video: `/media/reel/${id}.mp4`, poster: `/media/reel/${id}.webp` };
 });
 
-// Each line reads `${figure} ${text}`; the last one waits on Ced (deck: [placeholder]).
+// Each line reads `${figure} ${text}`.
 export const proof = [
   { figure: "4", text: "years as a video editor" },
   { figure: "50+", text: "ads since August 2026" },
   { figure: "9", text: "ads in one week" },
   { figure: "3 to 5", text: "days from brief to delivery" },
-  { figure: "[placeholder]", text: "", placeholder: true },
 ];
 
 export const workSection = {
@@ -88,10 +92,13 @@ export const howIWork = {
   heading: "How I work",
   intro:
     "I'm an AI video ad editor. An ad can start from raw footage, an AI still or a 3D blocking take, and every ad goes through the same five steps.",
-  // One ad's before and after; each frame's caption waits on Ced.
-  frames: ["Source", "Edit or AI step", "Finished frame"],
+  // One shot of the skincare storyline ad (SC09), from blocking to the cut.
+  frames: [
+    { label: "Blocking", text: "Actors and camera set in Director's Desk.", src: "/media/how-1-blocking.webp" },
+    { label: "AI still", text: "The first frame, made from the approved blocking.", src: "/media/how-2-ai-still.webp" },
+    { label: "Finished frame", text: "Animated, graded and cut into the ad.", src: "/media/how-3-finished.webp" },
+  ],
   approvalLabel: "Approval",
-  daysLabel: "Days",
   // approval: the deck's line after "Step n approval:" (step 5 has none).
   steps: [
     {
@@ -153,7 +160,8 @@ export const offer = {
 };
 
 // Written but not confirmed: the heading and each line wait on Ced, so each
-// line shows the placeholder marker first.
+// line shows the placeholder marker first. Off the home page until Ced
+// confirms the lines (30 Oct 2026); Trust.tsx goes back in under Packages.
 export const trust = {
   heading: placeholder,
   lines: [
@@ -174,7 +182,6 @@ export const about = {
   ],
 };
 
-// answerPlaceholder: the answer starts with the placeholder marker.
 export const faq = {
   heading: "FAQ",
   items: [
@@ -194,8 +201,7 @@ export const faq = {
     },
     {
       question: "Which languages can you deliver?",
-      answer: "Each language version is an add-on.",
-      answerPlaceholder: true,
+      answer: "English, German and Spanish so far. Each language version is an add-on."
     },
     {
       question: "How does pricing work?",

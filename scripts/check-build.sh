@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
 # Checks the built pages against public/sitemap.xml (plan T10). Run it after
-# `npm run build`. A missing page, title, description, canonical or h1 fails
-# the run. Until the media pass a missing og:image or JSON-LD block is only a
-# warning; the media pass (plan TM) sets MEDIA_READY=1 to make them fail too.
-MEDIA_READY=0
+# `npm run build`. A missing page, title, description, canonical, h1 or
+# og:image fails the run, and so does a home page without JSON-LD (/book has
+# none, per the Schema row in Design; plan TM).
 
 set -uo pipefail
 cd "$(dirname "$0")/.."
 site="https://www.cedcantong.site"
 out="build/client"
-pages=0 fails=0 warns=0
+pages=0 fails=0
 
 fail() { echo "FAIL $1: $2"; fails=$((fails + 1)); }
-media() {
-  if [ "$MEDIA_READY" = 1 ]; then fail "$1" "$2"; else echo "WARN $1: $2"; warns=$((warns + 1)); fi
-}
 count() { grep -o "$1" "$2" | wc -l | tr -d ' '; }
 
 # Each sitemap URL: "/" is index.html, "/book/" is book/index.html.
@@ -28,8 +24,10 @@ for url in $(grep -o '<loc>[^<]*</loc>' public/sitemap.xml | sed 's|</*loc>||g')
   canonical=$(grep -o '<link rel="canonical" href="[^"]*"' "$file" | sed 's/.*href="//; s/"$//' | tr '\n' ' ')
   [ "$canonical" = "$url " ] || fail "$path" "canonical is '$canonical', not one '$url'"
   [ "$(count '<h1[ >]' "$file")" = 1 ] || fail "$path" "not exactly one <h1>"
-  grep -q '<meta property="og:image" content="https://' "$file" || media "$path" "no og:image"
-  grep -q '<script type="application/ld+json">' "$file" || media "$path" "no JSON-LD"
+  grep -q '<meta property="og:image" content="https://' "$file" || fail "$path" "no og:image"
+  if [ "$path" = / ]; then
+    grep -q '<script type="application/ld+json">' "$file" || fail "$path" "no JSON-LD"
+  fi
 done
 
 # Each built page is in the sitemap too (a new case study needs its line; README).
@@ -38,4 +36,4 @@ for file in $(cd "$out" && find . -name index.html | sed 's|^\./||'); do
 done
 
 if [ "$fails" -gt 0 ]; then echo "FAILED: $fails misses"; exit 1; fi
-if [ "$warns" -gt 0 ]; then echo "OK: $pages pages ($warns warnings)"; else echo "OK: $pages pages"; fi
+echo "OK: $pages pages"

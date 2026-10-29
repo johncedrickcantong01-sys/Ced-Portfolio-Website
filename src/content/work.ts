@@ -1,18 +1,15 @@
 // The ads in Selected work (plan TV, 29 Oct 2026: a video showcase, no
-// case-study pages). Each entry is one card on the home page. Placeholders
-// until Ced's ads arrive (plan, "Placeholders first").
-import { placeholder } from "./site";
+// case-study pages). Each entry is one card on the home page.
 
 export type Stage = "TOF" | "MOF" | "BOF";
 
-// The deck's five formats, or the placeholder until Ced names one.
+// The deck's five formats.
 export type Format =
   | "AI storyline ad"
   | "UGC ad"
   | "Talking head with B-roll"
   | "VSL"
-  | "Product and offer ad"
-  | "[placeholder]";
+  | "Product and offer ad";
 
 export type Work = {
   slug: string;
@@ -49,15 +46,5 @@ export const work: Work[] = [
     video: "https://assets.cedcantong.site/work-skincare-talking-head-mof.mp4",
     duration: "PT1M1S",
     uploadDate: "2026-10-29",
-  },
-  {
-    slug: "placeholder-bof",
-    brand: "Spec ad",
-    stage: "BOF",
-    format: placeholder,
-    poster: null,
-    video: null,
-    duration: null,
-    uploadDate: null,
   },
 ];

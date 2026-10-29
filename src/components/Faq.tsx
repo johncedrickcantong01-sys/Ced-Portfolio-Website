@@ -1,4 +1,4 @@
-import { faq, placeholder } from "../content/site";
+import { faq } from "../content/site";
 
 // FAQ as plain text: every question and answer always shown, no accordion,
 // no FAQ schema (findings D6).
@@ -14,7 +14,6 @@ export default function Faq() {
             <div key={item.question}>
               <h3 className="text-body font-medium text-pretty">{item.question}</h3>
               <p className="mt-2 max-w-[48ch] text-body text-pretty text-dim">
-                {item.answerPlaceholder && <>{placeholder} </>}
                 {item.answer}
               </p>
             </div>

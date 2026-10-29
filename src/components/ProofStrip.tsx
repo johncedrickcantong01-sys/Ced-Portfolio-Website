@@ -5,11 +5,11 @@ import { proof } from "../content/site";
 export default function ProofStrip() {
   return (
     <section className="bg-bay font-text text-paper">
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-6 px-6 pt-8 pb-16 md:px-13 md:pt-10 lg:grid-cols-5 lg:gap-x-10">
+      <ul className="grid grid-cols-2 gap-x-6 gap-y-6 px-6 pt-8 pb-16 md:px-13 md:pt-10 lg:grid-cols-4 lg:gap-x-10">
         {proof.map((item) => (
           <li key={item.text}>
             <p className="text-small text-dim">
-              <span className={`text-figure font-medium ${item.placeholder ? "" : "text-paper"}`}>{item.figure}</span>{" "}
+              <span className="text-figure font-medium text-paper">{item.figure}</span>{" "}
               {item.text}
             </p>
           </li>
