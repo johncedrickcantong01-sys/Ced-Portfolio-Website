@@ -4,9 +4,6 @@
 // labels "Approval" and "Days" (findings D-T8).
 import type { MetaDescriptor } from "react-router";
 
-// Copy Ced still has to give (deck: [placeholder]); shown on the page in dim.
-export const placeholder = "[placeholder]";
-
 // The production origin, for canonicals, og:url, the schema and the sitemap.
 export const siteUrl = "https://www.cedcantong.site";
 
@@ -159,11 +156,9 @@ export const offer = {
   ],
 };
 
-// Written but not confirmed: the heading and each line wait on Ced, so each
-// line shows the placeholder marker first. Off the home page until Ced
-// confirms the lines (30 Oct 2026); Trust.tsx goes back in under Packages.
+// Confirmed by Ced (30 Oct 2026).
 export const trust = {
-  heading: placeholder,
+  heading: "Rights and trust",
   lines: [
     "Commercial-use licences for the tools and models used.",
     "Voice consent.",

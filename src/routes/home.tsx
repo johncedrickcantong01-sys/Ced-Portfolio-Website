@@ -6,6 +6,7 @@ import ProofStrip from "../components/ProofStrip";
 import WorkGrid from "../components/WorkGrid";
 import HowIWork from "../components/HowIWork";
 import Offer from "../components/Offer";
+import Trust from "../components/Trust";
 import AboutCed from "../components/AboutCed";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
@@ -73,6 +74,7 @@ export default function Home() {
         <WorkGrid />
         <HowIWork />
         <Offer />
+        <Trust />
         <AboutCed />
         <Faq />
         {/* Book a call again: the hero's frame closes the page */}
