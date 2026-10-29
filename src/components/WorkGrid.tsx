@@ -6,21 +6,22 @@ import { work, type Work } from "../content/work";
 // Selected work as a video showcase (plan TV): each ad plays muted in its 9:16
 // frame while it is on screen, with pause and sound buttons on top, like the
 // old site. Sound is on for one ad at a time. On phones the credits sit beside
-// the frame; from 1024 px the heading keeps the left rail.
+// the frame; from 768 px the ads stand in one row in funnel order (TOF, MOF,
+// BOF) under the heading, with the intro beside the heading from 1024 px.
 export default function WorkGrid() {
   const [sound, setSound] = useState<string | null>(null);
 
   return (
     <section id="work" aria-labelledby="work-title" className="px-6 pt-24 font-text text-paper md:px-13 md:pt-32">
       <div className="border-t border-rule pt-6 md:pt-8 lg:grid lg:grid-cols-12 lg:gap-x-6">
-        <div className="lg:col-span-4">
-          <h2 id="work-title" className="text-heading font-medium text-balance">
-            {workSection.heading}
-          </h2>
-          <p className="mt-6 max-w-[46ch] text-body text-pretty text-dim">{workSection.intro}</p>
-          <p className="mt-4 max-w-[46ch] text-body text-pretty text-dim">{workSection.note}</p>
+        <h2 id="work-title" className="text-heading font-medium text-balance lg:col-span-5">
+          {workSection.heading}
+        </h2>
+        <div className="mt-6 lg:col-span-6 lg:col-start-7 lg:mt-0">
+          <p className="max-w-[52ch] text-body text-pretty text-dim">{workSection.intro}</p>
+          <p className="mt-4 max-w-[52ch] text-body text-pretty text-dim">{workSection.note}</p>
         </div>
-        <ul className="mt-12 grid gap-y-8 md:grid-cols-2 md:gap-x-6 lg:col-span-6 lg:col-start-7 lg:mt-0">
+        <ul className="mt-12 grid gap-y-8 md:mt-16 md:grid-cols-3 md:gap-x-6 lg:col-span-12">
           {work.map((item) => (
             <li key={item.slug} className="flex items-end gap-5 md:block">
               <AdFrame item={item} soundOn={sound === item.slug} setSound={setSound} />
