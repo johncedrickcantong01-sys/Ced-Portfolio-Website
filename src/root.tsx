@@ -15,6 +15,7 @@ import "./index.css";
 // all weights) loads first.
 export const links: Route.LinksFunction = () => [
   { rel: "preload", href: geistWoff2, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {

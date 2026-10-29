@@ -56,6 +56,11 @@ const schema = {
   ],
 };
 
+// The first reel poster is the largest paint on every screen size.
+export const links: Route.LinksFunction = () => [
+  { rel: "preload", href: "/media/reel/reel-01.webp", as: "image", fetchPriority: "high" },
+];
+
 export const meta: Route.MetaFunction = () => [
   ...pageMeta("/", homeMeta.title, homeMeta.description),
   { "script:ld+json": schema },
