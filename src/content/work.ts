@@ -47,4 +47,14 @@ export const work: Work[] = [
     duration: "PT1M1S",
     uploadDate: "2026-10-29",
   },
+  {
+    slug: "spec-product-bof",
+    brand: "Spec ad",
+    stage: "BOF",
+    format: "Product and offer ad",
+    poster: "/media/work-spec-product-bof.webp",
+    video: "https://assets.cedcantong.site/work-spec-product-bof.mp4",
+    duration: "PT30S",
+    uploadDate: "2026-10-30",
+  },
 ];

@@ -43,7 +43,10 @@ const schema = {
       "@type": "VideoObject",
       "@id": `${url}#${item.slug}`,
       name: `${item.stage} ${item.format}`,
-      description: `${item.stage} ${item.format} for ${item.brand}, edited by Ced Cantong.`,
+      description:
+        item.brand === "Spec ad"
+          ? `${item.stage} ${item.format}, a spec ad by Ced Cantong.`
+          : `${item.stage} ${item.format} for ${item.brand}, edited by Ced Cantong.`,
       thumbnailUrl: siteUrl + item.poster,
       contentUrl: item.video,
       duration: item.duration,

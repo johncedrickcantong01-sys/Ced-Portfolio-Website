@@ -89,12 +89,17 @@ export const howIWork = {
   heading: "How I work",
   intro:
     "I'm an AI video ad editor. An ad can start from raw footage, an AI still or a 3D blocking take, and every ad goes through the same five steps.",
-  // One shot of the skincare storyline ad (SC09), from blocking to the cut.
-  frames: [
-    { label: "Blocking", text: "Actors and camera set in Director's Desk.", src: "/media/how-1-blocking.webp" },
-    { label: "AI still", text: "The first frame, made from the approved blocking.", src: "/media/how-2-ai-still.webp" },
-    { label: "Finished frame", text: "Animated, graded and cut into the ad.", src: "/media/how-3-finished.webp" },
-  ],
+  // The BOF spec ad (Hearthcup, clay): its approved Director's Desk take under
+  // the finished clip, both 30 s and cut on the same beats, so a drag line
+  // shows one against the other as they play (Ced, 30 Oct 2026).
+  compare: {
+    draft: { label: "3D draft", video: "https://assets.cedcantong.site/how-draft.mp4", poster: "/media/how-draft.webp" },
+    final: { label: "Final", video: "https://assets.cedcantong.site/how-final.mp4", poster: "/media/how-final.webp" },
+    caption: "A 30-second BOF spec ad. Drag the line from the 3D draft in Director's Desk to the finished ad.",
+    handle: "Compare the 3D draft with the final ad",
+    play: "Play",
+    pause: "Pause",
+  },
   approvalLabel: "Approval",
   // approval: the deck's line after "Step n approval:" (step 5 has none).
   steps: [

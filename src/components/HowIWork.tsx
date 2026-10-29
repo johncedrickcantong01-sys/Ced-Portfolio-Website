@@ -1,9 +1,9 @@
 import { howIWork } from "../content/site";
+import DraftCompare from "./DraftCompare";
 
-// How I work: one ad's before and after as a strip of three joined frames
-// (source, step, finished frame) with the intro beside it as the section's
-// statement, then the five steps as segments on one track, like clips on a
-// timeline.
+// How I work: one ad from its 3D draft to the finished cut in a 9:16 frame
+// with a drag line, held beside the intro and the five steps while they
+// scroll past (from 1024 px), then the timeline and the tools.
 export default function HowIWork() {
   return (
     <section
@@ -15,55 +15,37 @@ export default function HowIWork() {
         <h2 id="how-i-work-title" className="text-heading font-medium text-balance lg:col-span-12">
           {howIWork.heading}
         </h2>
-        <p className="mt-6 max-w-[36ch] text-figure leading-[1.25] text-pretty lg:col-span-5 lg:col-start-8 lg:row-start-2 lg:mt-0 lg:self-end">
-          {howIWork.intro}
-        </p>
 
-        <div className="mt-12 grid grid-cols-3 gap-1 md:mt-16 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:mt-10">
-          {howIWork.frames.map((frame, i) => (
-            <figure key={frame.label}>
-              <img
-                src={frame.src}
-                alt=""
-                width={540}
-                height={960}
-                loading="lazy"
-                className={`aspect-9/16 w-full bg-frame object-cover outline-1 -outline-offset-1 outline-paper/10 ${
-                  i === 0 ? "rounded-l-xl md:rounded-l-2xl" : ""
-                } ${i === howIWork.frames.length - 1 ? "rounded-r-xl md:rounded-r-2xl" : ""}`}
-              />
-              <figcaption className="mt-3 pr-2 text-small">
-                <span className="block font-medium text-paper">{frame.label}</span>
-                <span className="block text-pretty text-dim">{frame.text}</span>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="mt-10 max-w-sm md:mt-12 lg:sticky lg:top-24 lg:col-span-5 lg:mt-10 lg:max-w-[min(100%,calc((100svh-13rem)*9/16))] lg:self-start">
+          <DraftCompare />
         </div>
 
-        <ol className="mt-16 md:mt-20 lg:col-span-12 lg:grid lg:grid-cols-5 lg:gap-x-6">
-          {howIWork.steps.map((step, i) => (
-            <li key={step.name} className="border-t border-rule py-6 md:grid md:grid-cols-12 md:gap-x-6 lg:block lg:pb-0">
-              <h3 className="text-figure font-medium md:col-span-4">
-                <span className="text-dim">{i + 1}</span> {step.name}
-              </h3>
-              <div className="mt-4 md:col-span-8 md:mt-0 lg:mt-5">
-                <p className="max-w-[46ch] text-body text-pretty">{step.text}</p>
-                <dl className="mt-4 text-small">
-                  {step.approval && (
-                    <div>
-                      <dt className="inline font-medium">{howIWork.approvalLabel}:</dt>{" "}
-                      <dd className="inline text-dim">{step.approval}</dd>
-                    </div>
-                  )}
-                </dl>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-12 lg:col-span-6 lg:col-start-7 lg:mt-10">
+          <p className="max-w-[36ch] text-figure leading-[1.25] text-pretty">{howIWork.intro}</p>
 
-        <div className="mt-12 border-t border-rule pt-6 md:mt-16 lg:col-span-12 lg:grid lg:grid-cols-12 lg:gap-x-6">
-          <p className="text-figure font-medium lg:col-span-6">{howIWork.total}</p>
-          <p className="mt-4 max-w-[60ch] text-small text-pretty text-dim lg:col-span-6 lg:mt-0">{howIWork.tools}</p>
+          <ol className="mt-10 md:mt-12">
+            {howIWork.steps.map((step, i) => (
+              <li key={step.name} className="border-t border-rule py-6 md:grid md:grid-cols-6 md:gap-x-6">
+                <h3 className="text-figure font-medium md:col-span-2">
+                  <span className="text-dim">{i + 1}</span> {step.name}
+                </h3>
+                <div className="mt-4 md:col-span-4 md:mt-0">
+                  <p className="max-w-[46ch] text-body text-pretty">{step.text}</p>
+                  {step.approval && (
+                    <p className="mt-4 text-small">
+                      <span className="font-medium">{howIWork.approvalLabel}:</span>{" "}
+                      <span className="text-dim">{step.approval}</span>
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="border-t border-rule pt-6">
+            <p className="text-figure font-medium">{howIWork.total}</p>
+            <p className="mt-4 max-w-[60ch] text-small text-pretty text-dim">{howIWork.tools}</p>
+          </div>
         </div>
       </div>
     </section>
