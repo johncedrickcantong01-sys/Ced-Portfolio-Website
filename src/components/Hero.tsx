@@ -1,88 +1,92 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { Pause, Play, Volume2, X } from "lucide-react";
-import { bookCall, hero, heroAd, heroReel } from "../content/site";
+import { Pause, Play } from "lucide-react";
+import { bookCall, hero, heroReel } from "../content/site";
 
-// Footage first: the reel fills an inset frame under the header, and the
-// title sits small over its lower-left on a scrim. The top-right corner
-// belongs to the reel: its pause button, or the placeholder label until
-// Ced's ad is cut.
+// Footage first (plan TH): a row of 9:16 ad openings slides through an inset
+// frame under the header, and the title sits small over its lower-left on a
+// scrim. The row is the set twice, so sliding it by half never jumps. Each
+// clip loads and plays only while it shows; the pause button stops the row.
+// Under reduced motion (and before hydration) it is a still row you swipe.
 export default function Hero() {
-  const reelRef = useRef<HTMLVideoElement>(null);
-  const adDialogRef = useRef<HTMLDialogElement>(null);
-  const adRef = useRef<HTMLVideoElement>(null);
-  // off: no loop (none set, or reduced motion); the loop shows once it has played.
-  const [reel, setReel] = useState<"off" | "loading" | "playing" | "paused">("off");
+  const trackRef = useRef<HTMLUListElement>(null);
+  const [moving, setMoving] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+  const shown = useRef(new Set<HTMLVideoElement>());
 
-  // After first paint: the loop for this screen width. Under reduced motion
-  // the poster stays and no video loads.
   useEffect(() => {
-    const video = reelRef.current;
-    if (!heroReel || !video || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    video.muted = true;
-    video.src = matchMedia("(min-width: 768px)").matches ? heroReel.wide : heroReel.tall;
-    setReel("loading");
-    video.play().catch(() => {});
+    const track = trackRef.current;
+    if (!track || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setMoving(true);
+    const observer = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (isIntersecting) {
+          shown.current.add(video);
+          if (!video.getAttribute("src")) video.src = video.dataset.src!;
+          if (!pausedRef.current) video.play().catch(() => {});
+        } else {
+          shown.current.delete(video);
+          video.pause();
+        }
+      }
+    });
+    track.querySelectorAll("video").forEach((video) => observer.observe(video));
+    return () => observer.disconnect();
   }, []);
 
-  function toggleReel() {
-    const video = reelRef.current;
-    if (!video) return;
-    if (video.paused) video.play().catch(() => {});
-    else video.pause();
-  }
-
-  function openAd() {
-    const dialog = adDialogRef.current;
-    const ad = adRef.current;
-    if (!heroAd || !dialog || !ad) return;
-    if (!ad.getAttribute("src")) ad.src = heroAd.src;
-    dialog.showModal();
-    ad.play().catch(() => {});
+  function togglePaused() {
+    const next = !paused;
+    setPaused(next);
+    for (const video of shown.current) {
+      if (next) video.pause();
+      else video.play().catch(() => {});
+    }
   }
 
   return (
     <section aria-labelledby="hero-title" className="bg-bay px-2 pb-2 font-text text-paper md:px-3 md:pb-3">
       <div className="relative isolate flex h-[calc(100svh_-_var(--header-h)_-_0.5rem)] min-h-[34rem] flex-col justify-end overflow-hidden rounded-xl bg-frame outline-1 -outline-offset-1 outline-paper/10 md:h-[calc(100svh_-_var(--header-h)_-_0.75rem)] md:rounded-2xl">
-        {heroReel ? (
-          <>
-            <picture>
-              <source media="(min-width: 768px)" srcSet={heroReel.posterWide} />
-              <img
-                src={heroReel.posterTall}
-                alt=""
-                fetchPriority="high"
-                className="absolute inset-0 -z-10 size-full object-cover"
-              />
-            </picture>
-            <video
-              ref={reelRef}
-              muted
-              loop
-              playsInline
-              aria-hidden="true"
-              onPlaying={() => setReel("playing")}
-              onPause={() => setReel("paused")}
-              className={`absolute inset-0 -z-10 size-full object-cover transition-opacity duration-700 ${reel === "playing" || reel === "paused" ? "opacity-100" : "opacity-0"}`}
-            />
-          </>
-        ) : (
-          <div aria-hidden="true" className="reel-placeholder absolute inset-0 -z-10" />
-        )}
+        <div
+          aria-hidden="true"
+          className={`absolute inset-x-0 top-0 -z-10 h-[62%] py-2 md:h-full md:py-3 ${moving ? "overflow-hidden" : "snap-x overflow-x-auto"}`}
+        >
+          <ul
+            ref={trackRef}
+            className={`flex h-full w-max ${moving ? "animate-[reel-slide_90s_linear_infinite]" : ""} ${paused ? "[animation-play-state:paused]" : ""}`}
+          >
+            {(moving ? [...heroReel, ...heroReel] : heroReel).map((clip, i) => (
+              <li key={i} className="h-full shrink-0 snap-start pl-2 md:pl-3">
+                <video
+                  data-src={clip.video}
+                  poster={clip.poster}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  className="aspect-9/16 h-full w-auto rounded-lg bg-bay object-cover"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* From 768 px the row runs behind the text, so the left side darkens. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 hidden bg-linear-to-r from-bay/85 via-bay/50 via-45% to-transparent to-75% md:block" />
 
-        <div className="absolute top-4 right-4 md:top-10 md:right-10">
-          {!heroReel && <p className="text-small text-dim">{hero.reelPlaceholder}</p>}
-          {reel !== "off" && (
+        {moving && (
+          <div className="absolute top-4 right-4 md:top-10 md:right-10">
             <button
               type="button"
-              onClick={toggleReel}
+              onClick={togglePaused}
               className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md bg-bay/70 px-4 text-small font-medium backdrop-blur-sm transition-colors hover:bg-bay"
             >
-              {reel === "playing" ? <Pause aria-hidden="true" className="size-3.5" /> : <Play aria-hidden="true" className="size-3.5" />}
-              {reel === "playing" ? hero.pauseReel : hero.playReel}
+              {paused ? <Play aria-hidden="true" className="size-3.5" /> : <Pause aria-hidden="true" className="size-3.5" />}
+              {paused ? hero.playReel : hero.pauseReel}
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="hero-scrim px-4 pb-5 md:px-10 md:pb-10">
           <h1 id="hero-title" className="max-w-[17ch] text-display font-medium text-balance">
@@ -96,46 +100,9 @@ export default function Hero() {
             >
               {bookCall.label}
             </Link>
-            {heroAd && (
-              <button
-                type="button"
-                onClick={openAd}
-                aria-haspopup="dialog"
-                className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-md px-5 text-body font-medium ring-1 ring-paper/40 transition-colors ring-inset hover:bg-paper/10"
-              >
-                <Volume2 aria-hidden="true" className="size-4" />
-                {hero.playWithSound}
-              </button>
-            )}
           </div>
         </div>
       </div>
-
-      {heroAd && (
-        <dialog
-          ref={adDialogRef}
-          aria-label={hero.playWithSound}
-          onClose={() => adRef.current?.pause()}
-          className="m-auto max-w-none overflow-visible bg-transparent p-0 backdrop:bg-bay/90"
-        >
-          <button
-            type="button"
-            onClick={() => adDialogRef.current?.close()}
-            aria-label="Close"
-            className="focus-ring absolute -top-12 right-0 inline-flex size-10 items-center justify-center rounded-md bg-paper/10 text-paper transition-colors hover:bg-paper/20"
-          >
-            <X aria-hidden="true" className="size-5" />
-          </button>
-          <video
-            ref={adRef}
-            controls
-            playsInline
-            width={heroAd.width}
-            height={heroAd.height}
-            className="h-auto max-h-[85svh] w-auto max-w-[calc(100vw_-_2rem)] rounded-xl bg-frame"
-          />
-        </dialog>
-      )}
     </section>
   );
 }

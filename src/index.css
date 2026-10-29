@@ -53,6 +53,13 @@
   }
 }
 
+/* The hero row slides by one set (half the doubled row), so it loops without a jump. */
+@keyframes reel-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Bottom scrim under the hero text. Below the fade (the text area) the bay
    black never drops under 0.65 alpha: paper text keeps 5.19:1 over white
    footage (findings D-T7). */

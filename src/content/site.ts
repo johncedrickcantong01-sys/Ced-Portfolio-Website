@@ -49,22 +49,16 @@ export const hero = {
   headline: "DTC video ad editor for every stage of your funnel",
   subline:
     "I edit UGC, talking head with B-roll, VSLs, product and offer ads, and AI storyline ads, for brands directly or white-label for their agencies.",
-  playWithSound: "Play with sound",
   pauseReel: "Pause reel",
   playReel: "Play reel",
-  // Shown in the empty frame until heroReel is set (plan, "Placeholders first").
-  reelPlaceholder: "Reel: placeholder",
 };
 
-// The muted hero loop: wide from 768 px, tall below, each with its poster
-// (WebP, the LCP). Files go in public/media/ (plan T6). null until Ced's ad is cut.
-export type HeroReel = { wide: string; tall: string; posterWide: string; posterTall: string };
-export const heroReel: HeroReel | null = null;
-
-// The full hero ad with sound, opened by "Play with sound" and loaded only on
-// that click. width and height keep its box steady. null until it is hosted.
-export type HeroAd = { src: string; width: number; height: number };
-export const heroAd: HeroAd | null = null;
+// The hero carousel (plan TH): the first 5 s of 12 past ads, muted, 540×960,
+// each with its first frame as the poster. Files in public/media/reel/.
+export const heroReel = Array.from({ length: 12 }, (_, i) => {
+  const id = `reel-${String(i + 1).padStart(2, "0")}`;
+  return { video: `/media/reel/${id}.mp4`, poster: `/media/reel/${id}.webp` };
+});
 
 // Each line reads `${figure} ${text}`; the last one waits on Ced (deck: [placeholder]).
 export const proof = [
