@@ -8,11 +8,11 @@ import HowIWork from "../components/HowIWork";
 import AboutCed from "../components/AboutCed";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
-import { about, bookCall, closing, email, homeMeta, pageMeta, siteUrl } from "../content/site";
+import { about, bookCall, closing, email, homeMeta, linkedin, pageMeta, siteUrl } from "../content/site";
 import { work } from "../content/work";
 
 // The schema says only what the page says: no prices, no ratings, no FAQ
-// schema (findings D6). sameAs waits for Ced's profile links; no
+// schema (findings D6). sameAs is Ced's LinkedIn; no
 // areaServed, since the positioning brief names none. No makesOffer: the
 // packages are discussed on the call, not shown (Ced, 30 Oct 2026).
 const url = `${siteUrl}/`;
@@ -37,6 +37,7 @@ const schema = {
       url,
       image,
       jobTitle: "DTC video ad editor",
+      sameAs: [linkedin],
     },
     // Each Selected work ad, named and described as its card shows it.
     ...work.map((item) => ({

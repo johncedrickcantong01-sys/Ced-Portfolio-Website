@@ -1,6 +1,9 @@
-import { email, nav } from "../content/site";
+import { email, linkedin, nav } from "../content/site";
 
-// The name and the email. Same left edge as the header.
+const link =
+  "focus-ring inline-flex min-h-8 items-center self-start text-dim underline decoration-dim/40 underline-offset-4 transition-colors hover:text-paper hover:decoration-paper md:self-auto";
+
+// The name, the email and LinkedIn. Same left edge as the header.
 export default function Footer() {
   return (
     <footer className="px-6 pt-16 pb-10 font-text text-small md:px-13 md:pt-24">
@@ -8,12 +11,11 @@ export default function Footer() {
         <p translate="no" className="font-medium text-paper">
           {nav.name}
         </p>
-        <a
-          translate="no"
-          href={`mailto:${email}`}
-          className="focus-ring inline-flex min-h-8 items-center self-start text-dim underline decoration-dim/40 underline-offset-4 transition-colors hover:text-paper hover:decoration-paper md:self-auto"
-        >
+        <a translate="no" href={`mailto:${email}`} className={link}>
           {email}
+        </a>
+        <a href={linkedin} target="_blank" rel="noopener" className={link}>
+          LinkedIn
         </a>
       </div>
     </footer>

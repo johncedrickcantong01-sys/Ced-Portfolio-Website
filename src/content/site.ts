@@ -31,6 +31,7 @@ export function pageMeta(path: string, title: string, description: string): Meta
 export const bookCall = { label: "Book a call", href: "/book" };
 
 export const email = "johncedrickcantong01@gmail.com";
+export const linkedin = "https://www.linkedin.com/in/john-cedrick-cantong-3284392a4/";
 
 export const nav = {
   name: "Ced Cantong",
