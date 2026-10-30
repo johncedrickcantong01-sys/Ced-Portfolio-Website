@@ -72,7 +72,7 @@ export const heroReel = {
 // Each line reads `${figure} ${text}`.
 export const proof = [
   { figure: "4", text: "years as a video editor" },
-  { figure: "50+", text: "ads since August 2026" },
+  { figure: "100+", text: "ads since July 2026" },
   { figure: "9", text: "ads in one week" },
   { figure: "1 to 2", text: "days from brief to delivery" },
 ];
@@ -201,7 +201,7 @@ export const about = {
   portrait: { src: "/media/ced.webp", alt: "Ced Cantong", width: 800, height: 800 },
   lines: [
     "I'm Ced Cantong, a performance creative editor for DTC brands and the agencies that run their ads.",
-    "I've edited video for 4 years and made 50+ ads since August 2026, 9 of them in one week.",
+    "I've edited video for 4 years and made 100+ ads since July 2026, 9 of them in one week.",
     "I plan the blocking and camera for AI shots in 3D before any credit is spent.",
   ],
 };
