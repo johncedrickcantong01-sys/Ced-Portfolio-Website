@@ -105,7 +105,7 @@ export const howIWork = {
   compare: {
     draft: { label: "3D draft", video: "https://assets.cedcantong.site/how-draft_v5.mp4", poster: "/media/how-draft_v5.webp" },
     final: { label: "Final", video: "https://assets.cedcantong.site/how-final_v5.mp4", poster: "/media/how-final_v5.webp" },
-    caption: "Four moments from our storyline ads. Drag the line from the 3D draft in Director's Desk to the finished ad.",
+    caption: "Four moments from our storyline ads. Drag the line from the 3D draft to the finished ad.",
     handle: "Compare the 3D draft with the final ad",
     play: "Play",
     pause: "Pause",
@@ -141,7 +141,7 @@ export const howIWork = {
   ],
   total: "1 to 2 days from brief to delivery.",
   tools:
-    "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, Claude for scripts and prompts, Blender for 3D, and Director's Desk, my own 3D app for blocking and camera.",
+    "Tools: Final Cut Pro for the edit, Higgsfield for AI images and video, ElevenLabs for voice, Claude for scripts and prompts, and Blender for 3D.",
   // The running tool dock, copied from the old site (Hermes out, Claude and
   // Blender in, Ced 30 Oct 2026). Hover or tap an icon for its name and line.
   dockLabel: "Tools I use",
@@ -202,7 +202,7 @@ export const about = {
   lines: [
     "I'm Ced Cantong, a performance creative editor for DTC brands and the agencies that run their ads.",
     "I've edited video for 4 years and made 50+ ads since August 2026, 9 of them in one week.",
-    "I plan the blocking and camera for AI shots in Director's Desk, my own 3D app, before any credit is spent.",
+    "I plan the blocking and camera for AI shots in 3D before any credit is spent.",
   ],
 };
 
