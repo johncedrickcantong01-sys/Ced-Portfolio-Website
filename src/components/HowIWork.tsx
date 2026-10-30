@@ -16,7 +16,7 @@ export default function HowIWork() {
           {howIWork.heading}
         </h2>
 
-        <div className="mt-10 max-w-sm md:mt-12 lg:sticky lg:top-24 lg:col-span-5 lg:mt-10 lg:max-w-[min(100%,calc((100svh-13rem)*9/16))] lg:self-start">
+        <div className="mx-auto mt-10 w-full max-w-sm md:mt-12 lg:sticky lg:top-24 lg:col-span-5 lg:mt-10 lg:max-w-[min(100%,calc((100svh-13rem)*9/16))] lg:self-start">
           <DraftCompare />
         </div>
 

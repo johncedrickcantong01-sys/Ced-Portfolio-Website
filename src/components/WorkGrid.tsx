@@ -7,32 +7,31 @@ import { work, type Work } from "../content/work";
 // frame while it is on screen, with pause and sound buttons on top, like the
 // old site. Sound is on for one ad at a time. On phones the credits sit beside
 // the frame; from 768 px the ads stand in one row in funnel order (TOF, MOF,
-// BOF) under the heading, with the intro beside the heading from 1024 px.
+// BOF) under the heading; from 1024 px the heading and intro hold on the left
+// and the row takes the right two thirds, so the frames stay under a screen tall.
 export default function WorkGrid() {
   const [sound, setSound] = useState<string | null>(null);
 
   return (
     <section id="work" aria-labelledby="work-title" className="px-6 pt-24 font-text text-paper md:px-13 md:pt-32">
       <div className="border-t border-rule pt-6 md:pt-8 lg:grid lg:grid-cols-12 lg:gap-x-6">
-        <h2 id="work-title" className="text-heading font-medium text-balance lg:col-span-5">
-          {workSection.heading}
-        </h2>
-        <div className="mt-6 lg:col-span-6 lg:col-start-7 lg:mt-0">
-          <p className="max-w-[52ch] text-body text-pretty text-dim">{workSection.intro}</p>
+        <div className="lg:sticky lg:top-24 lg:col-span-4 lg:self-start">
+          <h2 id="work-title" className="text-heading font-medium text-balance">
+            {workSection.heading}
+          </h2>
+          <p className="mt-6 max-w-[52ch] text-body text-pretty text-dim">{workSection.intro}</p>
           <p className="mt-4 max-w-[52ch] text-body text-pretty text-dim">{workSection.note}</p>
         </div>
-        <ul className="mt-12 grid gap-y-8 md:mt-16 md:grid-cols-3 md:gap-x-6 lg:col-span-12">
+        <ul className="mt-12 grid gap-y-8 md:mt-16 md:grid-cols-3 md:gap-x-5 lg:col-span-8 lg:mt-0 xl:mx-auto xl:w-full xl:max-w-4xl">
           {work.map((item) => (
             <li key={item.slug} className="flex items-end gap-5 md:block">
               <AdFrame item={item} soundOn={sound === item.slug} setSound={setSound} />
-              <div className="min-w-0 md:mt-5">
+              <div className="min-w-0 md:mt-4">
                 <p className="flex flex-wrap gap-x-3 text-small">
                   <span className="font-medium text-paper">{item.stage}</span>
                   <span className="text-dim">{item.brand}</span>
                 </p>
-                <h3
-                  className="mt-3 text-figure leading-[1.15] font-medium text-balance text-paper"
-                >
+                <h3 className="mt-2 text-body leading-[1.25] font-medium text-balance text-paper">
                   {item.format}
                 </h3>
               </div>
