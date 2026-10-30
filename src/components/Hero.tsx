@@ -1,296 +1,117 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Monitor, Smartphone, Sparkles, Film } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
+import { Pause, Play } from "lucide-react";
+import { bookCall, hero, heroReel } from "../content/site";
 
-const PREVIEW_CLIPS = [
-  {
-    id: 'shorts',
-    label: 'Shorts/Reels',
-    icon: <Smartphone size={14} />,
-    title: 'Ced Showcase (Vertical)',
-    videoUrl: 'https://assets.cedcantong.site/Sample%20Edit%20%231-HD%201080p.mp4',
-    aspect: 'vertical',
-  },
-  {
-    id: 'podcast',
-    label: 'Podcast',
-    icon: <Monitor size={14} />,
-    title: 'Cases 4 Causes (Multi-Cam)',
-    videoUrl: 'https://assets.cedcantong.site/Trailer%20Landon%20-%20Cases%204%20Causes%20Podcast%20E2-HD%201080p.mp4',
-    aspect: 'horizontal',
-  },
-  {
-    id: 'commercial',
-    label: 'Commercial/VSL',
-    icon: <Sparkles size={14} />,
-    title: 'Sophie Feb Ad (Promo)',
-    videoUrl: 'https://assets.cedcantong.site/16x9%20Sophie%20Feb.%202025%20AD%235-HD%201080p.mp4',
-    aspect: 'horizontal',
-  }
-];
-
+// Footage first (plan TH, TH2): two rows of 9:16 ad openings slide opposite
+// ways through an inset frame under the header, and the title sits small over
+// its lower-left on a scrim. Each row is its set twice, so sliding it by half
+// never jumps. Each clip loads and plays only while it shows; the pause button
+// stops both rows. Under reduced motion (and before hydration) they are still
+// rows you swipe.
 export default function Hero() {
-  const [activeClip, setActiveClip] = useState(PREVIEW_CLIPS[0]);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [moving, setMoving] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+  const shown = useRef(new Set<HTMLVideoElement>());
 
-  // Sync state when clip changes
   useEffect(() => {
-    setProgress(0);
-    setCurrentTime(0);
-    
-    if (videoRef.current) {
-      videoRef.current.muted = isMuted;
-      videoRef.current.load();
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.log("Autoplay prevented on mount/clip-change:", error);
-        });
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setMoving(true);
+  }, []);
+
+  // Watch the clips once the rows are doubled, so the second copy loads too.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || !moving) return;
+    const observer = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (isIntersecting) {
+          shown.current.add(video);
+          if (!video.getAttribute("src")) video.src = video.dataset.src!;
+          if (!pausedRef.current) video.play().catch(() => {});
+        } else {
+          shown.current.delete(video);
+          video.pause();
+        }
       }
-    }
-  }, [activeClip]);
+    });
+    track.querySelectorAll("video").forEach((video) => observer.observe(video));
+    return () => observer.disconnect();
+  }, [moving]);
 
-  const togglePlay = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play().catch((error) => {
-          console.log("Play call failed:", error);
-        });
-      } else {
-        videoRef.current.pause();
-      }
+  function togglePaused() {
+    const next = !paused;
+    setPaused(next);
+    for (const video of shown.current) {
+      if (next) video.pause();
+      else video.play().catch(() => {});
     }
-  };
-
-  const toggleMute = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    if (videoRef.current) {
-      const newMuted = !isMuted;
-      videoRef.current.muted = newMuted;
-      setIsMuted(newMuted);
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const current = videoRef.current.currentTime;
-      const total = videoRef.current.duration || 1;
-      setCurrentTime(current);
-      setProgress((current / total) * 100);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration || 0);
-    }
-  };
-
-  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    if (videoRef.current && duration) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const width = rect.width;
-      const newPercentage = clickX / width;
-      videoRef.current.currentTime = newPercentage * duration;
-      setProgress(newPercentage * 100);
-    }
-  };
-
-  const formatTime = (seconds: number) => {
-    if (isNaN(seconds)) return '0:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
+  }
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[85vh] flex items-center container-max pt-28 pb-16">
-      
-      {/* Ambient Glow & Grid Pattern */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Soft radial glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[120px] opacity-60" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[40%] h-[45%] rounded-full bg-primary/5 blur-[100px] opacity-40" />
-        
-        {/* Softened background grid lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.008)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full z-10">
-        
-        {/* Left Column: Hero Content */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left">
-          
-          {/* Availability Indicator */}
-          <div className="flex items-center gap-3 mb-6 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-[10px] tracking-wider uppercase font-semibold text-white/80">Available for Q3 Projects & Retainers</span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="heading-xl text-text-main max-w-2xl mb-6 leading-[1.0] tracking-tight">
-            High-Retention Editing for Multi-Format <br className="hidden md:block" />
-            <span className="text-primary font-bold">Video Pipelines</span>
-            <span className="text-primary">.</span>
-          </h1>
-
-          {/* Subheadline (Brighter, thicker, highly readable) */}
-          <p className="text-body-lg text-white/95 max-w-xl mb-10 leading-relaxed font-normal">
-            I turn raw footage into polished podcasts, high-converting VSLs, and scroll-stopping social clips. Smooth editing, engaging pacing, and stress-free delivery to keep your content moving.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 items-center">
-            <a href="#projects" className="btn-primary group">
-              Explore My Work
-              <Play size={14} className="ml-4 group-hover:translate-x-1 transition-transform" fill="currentColor" />
-            </a>
-            <a href="#contact" className="inline-flex items-center justify-center bg-white/5 border border-white/10 text-white font-sans text-[11px] font-semibold tracking-widest uppercase px-6 py-3 transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:text-primary">
-              Let's Collaborate
-            </a>
-          </div>
-          
-        </div>
-
-        {/* Right Column: Interactive Multi-Format Preview Player */}
-        <div className="lg:col-span-5 w-full flex flex-col items-center lg:items-end justify-center">
-          
-          {/* Format Selection Tab Pills */}
-          <div className="flex items-center gap-1.5 mb-4 bg-white/5 p-1 rounded-lg border border-white/10 w-fit backdrop-blur-md">
-            {PREVIEW_CLIPS.map(clip => (
-              <button
-                key={clip.id}
-                onClick={() => setActiveClip(clip)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-bold tracking-widest uppercase transition-all duration-300 ${
-                  activeClip.id === clip.id
-                    ? 'bg-primary text-black shadow-md shadow-primary/20'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
+    <section aria-labelledby="hero-title" className="bg-bay px-2 pb-2 font-text text-paper md:px-3 md:pb-3">
+      <div className="relative isolate flex h-[calc(100svh_-_var(--header-h)_-_0.5rem)] min-h-[34rem] flex-col justify-end overflow-hidden rounded-xl bg-frame outline-1 -outline-offset-1 outline-paper/10 md:h-[calc(100svh_-_var(--header-h)_-_0.75rem)] md:rounded-2xl">
+        <div
+          ref={trackRef}
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 -z-10 flex h-[62%] flex-col gap-2 py-2 md:h-full md:gap-3 md:py-3"
+        >
+          {[heroReel.top, heroReel.bottom].map((row, r) => (
+            <div key={r} className={`min-h-0 flex-1 ${moving ? "overflow-hidden" : "snap-x overflow-x-auto"}`}>
+              <ul
+                className={`flex h-full w-max ${moving ? (r ? "animate-[reel-slide_90s_linear_infinite_reverse]" : "animate-[reel-slide_90s_linear_infinite]") : ""} ${paused ? "[animation-play-state:paused]" : ""}`}
               >
-                {clip.icon}
-                {clip.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Dynamic Video Player Frame */}
-          <div className="relative w-full flex justify-center items-center">
-            
-            {/* Ambient Backglow behind Player */}
-            <div className="absolute inset-0 bg-primary/5 blur-[60px] rounded-full pointer-events-none -z-10" />
-
-            <div 
-              onClick={() => togglePlay()}
-              className={`group relative w-full cursor-pointer overflow-hidden border border-white/10 bg-black shadow-2xl transition-all duration-500 ease-out flex items-center justify-center ${
-                activeClip.aspect === 'vertical' 
-                  ? 'max-w-[280px] aspect-[9/16] rounded-[2rem] border-4 border-neutral-800 ring-1 ring-white/10' 
-                  : 'max-w-xl aspect-video rounded-xl'
-              }`}
-            >
-              <video
-                ref={videoRef}
-                src={activeClip.videoUrl}
-                className="w-full h-full object-cover"
-                loop
-                muted={isMuted}
-                playsInline
-                autoPlay
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-              />
-
-              {/* Status Header Overlay */}
-              <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/5 pointer-events-none">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
-                </span>
-                <span className="font-mono text-[9px] text-white/90 uppercase tracking-widest font-semibold">
-                  FEATURED
-                </span>
-              </div>
-
-              {/* Top Right Action Overlay (Mute Toggle) */}
-              <button 
-                onClick={toggleMute} 
-                className="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black/90 border border-white/10 p-2 rounded-full text-white transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105"
-                title={isMuted ? "Unmute Audio" : "Mute Audio"}
-              >
-                {isMuted ? <VolumeX size={14} className="text-white/80" /> : <Volume2 size={14} className="text-primary" />}
-              </button>
-
-              {/* Center Playback Indicator (Shows briefly when paused) */}
-              {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px] transition-all duration-300">
-                  <div className="w-14 h-14 flex items-center justify-center text-black bg-primary rounded-full shadow-lg scale-100 hover:scale-105 transition-transform">
-                    <Play className="w-5 h-5 ml-1" fill="currentColor" />
-                  </div>
-                </div>
-              )}
-
-              {/* Sleek Interactive Video Controller Bar (Hover or Mobile Tap) */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 pt-10 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                
-                {/* Custom Progress Scrubber */}
-                <div 
-                  className="w-full h-1 bg-white/20 rounded-full cursor-pointer relative group/timeline"
-                  onClick={handleProgressBarClick}
-                >
-                  <div 
-                    className="absolute top-0 left-0 h-full bg-primary rounded-full transition-all duration-100"
-                    style={{ width: `${progress}%` }}
-                  />
-                  {/* Scrub head */}
-                  <div 
-                    className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full opacity-0 group-hover/timeline:opacity-100 transition-opacity duration-200 shadow-md"
-                    style={{ left: `calc(${progress}% - 5px)` }}
-                  />
-                </div>
-
-                {/* Left & Right Controls */}
-                <div className="flex items-center justify-between text-white">
-                  <div className="flex items-center gap-3">
-                    <button 
-                      onClick={togglePlay} 
-                      className="hover:text-primary transition-colors p-1"
-                      aria-label={isPlaying ? "Pause" : "Play"}
-                    >
-                      {isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" />}
-                    </button>
-                    <span className="font-mono text-[10px] opacity-90 tracking-wider">
-                      {formatTime(currentTime)} / {formatTime(duration)}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-primary/80 font-bold hidden sm:inline">
-                      {activeClip.title}
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
+                {(moving ? [...row, ...row] : row).map((clip, i) => (
+                  <li key={i} className="h-full shrink-0 snap-start pl-2 md:pl-3">
+                    <video
+                      data-src={clip.video}
+                      poster={clip.poster}
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      className="aspect-9/16 h-full w-auto rounded-lg bg-bay object-cover"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
-
-          </div>
-
+          ))}
         </div>
+        {/* From 768 px the row runs behind the text, so the left side darkens. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 hidden bg-linear-to-r from-bay/85 via-bay/50 via-45% to-transparent to-75% md:block" />
 
+        {moving && (
+          <div className="absolute top-4 right-4 md:top-10 md:right-10">
+            <button
+              type="button"
+              onClick={togglePaused}
+              className="focus-ring inline-flex min-h-10 items-center gap-2 rounded-md bg-bay/70 px-4 text-small font-medium backdrop-blur-sm transition-colors hover:bg-bay"
+            >
+              {paused ? <Play aria-hidden="true" className="size-3.5" /> : <Pause aria-hidden="true" className="size-3.5" />}
+              {paused ? hero.playReel : hero.pauseReel}
+            </button>
+          </div>
+        )}
+
+        <div className="hero-scrim px-4 pb-5 md:px-10 md:pb-10">
+          <h1 id="hero-title" className="max-w-[17ch] text-display font-medium text-balance">
+            {hero.headline}
+          </h1>
+          <p className="mt-4 max-w-[46ch] text-body text-pretty md:mt-6">{hero.subline}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-3 md:mt-8">
+            <Link
+              to={bookCall.href}
+              className="focus-ring inline-flex min-h-12 items-center rounded-md bg-caption px-6 text-body font-medium text-bay transition-colors hover:bg-paper"
+            >
+              {bookCall.label}
+            </Link>
+          </div>
+        </div>
       </div>
-
     </section>
   );
 }

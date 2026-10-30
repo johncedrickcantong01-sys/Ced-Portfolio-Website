@@ -1,0 +1,4 @@
+# Private share (plan T12): every page stays out of search until the public
+# launch. robots.txt still allows crawling so Google can read this header.
+/*
+  X-Robots-Tag: noindex
