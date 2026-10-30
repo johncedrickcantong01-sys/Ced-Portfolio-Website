@@ -18,9 +18,13 @@ export default function Hero() {
   const shown = useRef(new Set<HTMLVideoElement>());
 
   useEffect(() => {
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setMoving(true);
+  }, []);
+
+  // Watch the clips once the rows are doubled, so the second copy loads too.
+  useEffect(() => {
     const track = trackRef.current;
-    if (!track || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setMoving(true);
+    if (!track || !moving) return;
     const observer = new IntersectionObserver((entries) => {
       for (const { target, isIntersecting } of entries) {
         const video = target as HTMLVideoElement;
@@ -36,7 +40,7 @@ export default function Hero() {
     });
     track.querySelectorAll("video").forEach((video) => observer.observe(video));
     return () => observer.disconnect();
-  }, []);
+  }, [moving]);
 
   function togglePaused() {
     const next = !paused;
