@@ -3,13 +3,14 @@ import { Link } from "react-router";
 import { Pause, Play } from "lucide-react";
 import { bookCall, hero, heroReel } from "../content/site";
 
-// Footage first (plan TH): a row of 9:16 ad openings slides through an inset
-// frame under the header, and the title sits small over its lower-left on a
-// scrim. The row is the set twice, so sliding it by half never jumps. Each
-// clip loads and plays only while it shows; the pause button stops the row.
-// Under reduced motion (and before hydration) it is a still row you swipe.
+// Footage first (plan TH, TH2): two rows of 9:16 ad openings slide opposite
+// ways through an inset frame under the header, and the title sits small over
+// its lower-left on a scrim. Each row is its set twice, so sliding it by half
+// never jumps. Each clip loads and plays only while it shows; the pause button
+// stops both rows. Under reduced motion (and before hydration) they are still
+// rows you swipe.
 export default function Hero() {
-  const trackRef = useRef<HTMLUListElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [moving, setMoving] = useState(false);
   const [paused, setPaused] = useState(false);
   const pausedRef = useRef(paused);
@@ -50,27 +51,31 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="bg-bay px-2 pb-2 font-text text-paper md:px-3 md:pb-3">
       <div className="relative isolate flex h-[calc(100svh_-_var(--header-h)_-_0.5rem)] min-h-[34rem] flex-col justify-end overflow-hidden rounded-xl bg-frame outline-1 -outline-offset-1 outline-paper/10 md:h-[calc(100svh_-_var(--header-h)_-_0.75rem)] md:rounded-2xl">
         <div
+          ref={trackRef}
           aria-hidden="true"
-          className={`absolute inset-x-0 top-0 -z-10 h-[62%] py-2 md:h-full md:py-3 ${moving ? "overflow-hidden" : "snap-x overflow-x-auto"}`}
+          className="absolute inset-x-0 top-0 -z-10 flex h-[62%] flex-col gap-2 py-2 md:h-full md:gap-3 md:py-3"
         >
-          <ul
-            ref={trackRef}
-            className={`flex h-full w-max ${moving ? "animate-[reel-slide_90s_linear_infinite]" : ""} ${paused ? "[animation-play-state:paused]" : ""}`}
-          >
-            {(moving ? [...heroReel, ...heroReel] : heroReel).map((clip, i) => (
-              <li key={i} className="h-full shrink-0 snap-start pl-2 md:pl-3">
-                <video
-                  data-src={clip.video}
-                  poster={clip.poster}
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  className="aspect-9/16 h-full w-auto rounded-lg bg-bay object-cover"
-                />
-              </li>
-            ))}
-          </ul>
+          {[heroReel.top, heroReel.bottom].map((row, r) => (
+            <div key={r} className={`min-h-0 flex-1 ${moving ? "overflow-hidden" : "snap-x overflow-x-auto"}`}>
+              <ul
+                className={`flex h-full w-max ${moving ? (r ? "animate-[reel-slide_90s_linear_infinite_reverse]" : "animate-[reel-slide_90s_linear_infinite]") : ""} ${paused ? "[animation-play-state:paused]" : ""}`}
+              >
+                {(moving ? [...row, ...row] : row).map((clip, i) => (
+                  <li key={i} className="h-full shrink-0 snap-start pl-2 md:pl-3">
+                    <video
+                      data-src={clip.video}
+                      poster={clip.poster}
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      className="aspect-9/16 h-full w-auto rounded-lg bg-bay object-cover"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
         {/* From 768 px the row runs behind the text, so the left side darkens. */}
         <div aria-hidden="true" className="absolute inset-0 -z-10 hidden bg-linear-to-r from-bay/85 via-bay/50 via-45% to-transparent to-75% md:block" />

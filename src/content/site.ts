@@ -55,13 +55,19 @@ export const hero = {
   playReel: "Play reel",
 };
 
-// The hero carousel (plan TH): the first 5 s of 12 past ads, muted, 540×960,
-// each with its first frame as the poster. Files in public/media/reel/.
-export const heroReel = Array.from({ length: 12 }, (_, i) => {
-  const id = `reel-${String(i + 1).padStart(2, "0")}`;
+// The hero carousel (plan TH, TH2): the first 5 s of 24 past ads, muted,
+// 540×960, each with its first frame as the poster. Files in
+// public/media/reel/. Two rows of 12: reel-01 to 12 on top, 13 to 24 below.
+const reelClip = (n: number) => {
+  const id = `reel-${String(n).padStart(2, "0")}`;
   // Clips on R2 (it answers range requests, which Safari needs to play video); posters stay here.
-  return { video: `https://assets.cedcantong.site/${id}.mp4`, poster: `/media/reel/${id}.webp` };
-});
+  // The second row's clips are _v1 on R2 (the plain names hold a cached 404).
+  return { video: `https://assets.cedcantong.site/${id}${n > 12 ? "_v1" : ""}.mp4`, poster: `/media/reel/${id}.webp` };
+};
+export const heroReel = {
+  top: Array.from({ length: 12 }, (_, i) => reelClip(i + 1)),
+  bottom: Array.from({ length: 12 }, (_, i) => reelClip(i + 13)),
+};
 
 // Each line reads `${figure} ${text}`.
 export const proof = [
@@ -90,13 +96,16 @@ export const howIWork = {
   heading: "How I work",
   intro:
     "I'm an AI video ad editor. An ad can start from raw footage, an AI still or a 3D blocking take, and every ad goes through the same five steps.",
-  // The BOF spec ad (Hearthcup, clay): its approved Director's Desk take under
-  // the finished clip, both 30 s and cut on the same beats, so a drag line
-  // shows one against the other as they play (Ced, 30 Oct 2026).
+  // Four moments from our storyline ads, joined in one video (27.6 s): O-453
+  // SC04 from the landing to the younger woman running from the house, O-458
+  // SC03's street run (cut before the wall), O-563 SC13's aisle walk and
+  // O-477 SC07's car park walk. Each part's approved Director's Desk take sits
+  // under its finished clip, both cut on the same frames, so a drag line shows
+  // one against the other as they play (Ced, 30 Oct 2026). No product on screen.
   compare: {
-    draft: { label: "3D draft", video: "https://assets.cedcantong.site/how-draft.mp4", poster: "/media/how-draft.webp" },
-    final: { label: "Final", video: "https://assets.cedcantong.site/how-final.mp4", poster: "/media/how-final.webp" },
-    caption: "A 30-second BOF spec ad. Drag the line from the 3D draft in Director's Desk to the finished ad.",
+    draft: { label: "3D draft", video: "https://assets.cedcantong.site/how-draft_v5.mp4", poster: "/media/how-draft_v5.webp" },
+    final: { label: "Final", video: "https://assets.cedcantong.site/how-final_v5.mp4", poster: "/media/how-final_v5.webp" },
+    caption: "Four moments from our storyline ads. Drag the line from the 3D draft in Director's Desk to the finished ad.",
     handle: "Compare the 3D draft with the final ad",
     play: "Play",
     pause: "Pause",
